@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "FirebaseKMM"
 include(":shared")
+include(":firebase-firestore")
