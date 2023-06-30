@@ -24,6 +24,10 @@ kotlin {
         framework {
             baseName = "firebase-app"
         }
+        noPodspec()
+        pod("FirebaseCore") {
+            version = "10.7.0"
+        }
     }
     
     sourceSets {
@@ -33,7 +37,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                api("com.google.firebase:firebase-common")
+            }
+        }
         val androidUnitTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
