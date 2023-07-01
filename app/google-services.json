@@ -1,0 +1,279 @@
+{
+  "project_info": {
+    "project_number": "262199812612",
+    "firebase_url": "https://whatsappclone-62617-default-rtdb.firebaseio.com",
+    "project_id": "whatsappclone-62617",
+    "storage_bucket": "whatsappclone-62617.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:961ece024b82d657960b51",
+        "android_client_info": {
+          "package_name": "com.artf.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:21d61b66fcd1ad78960b51",
+        "android_client_info": {
+          "package_name": "com.dev.estiven.whatsappclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-62jlq8ebe2mjffm0dg0sadgir8c4mam6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev.estiven.whatsappclone",
+            "certificate_hash": "151632ce410cecbaacb67953024d576119ac27a8"
+          }
+        },
+        {
+          "client_id": "262199812612-akc1gpp2lrku370n32qenc95thu7lt6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dev.estiven.whatsappclone",
+            "certificate_hash": "d92c4e839d59bd88ae53a7f81713b7f517fed67c"
+          }
+        },
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:027ab280cd2e6589960b51",
+        "android_client_info": {
+          "package_name": "com.dwarsh.webrtcsample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:1c4a54f79658b9eb960b51",
+        "android_client_info": {
+          "package_name": "com.estiven.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:891f7295a511dfd5960b51",
+        "android_client_info": {
+          "package_name": "com.estiven.wpp.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:e16f1b2d621a8d8f960b51",
+        "android_client_info": {
+          "package_name": "com.project.pradyotprakash.flashchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262199812612:android:09c030a9cdca6154960b51",
+        "android_client_info": {
+          "package_name": "io.getstream.chat.android.compose.sample.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCch8ysaZVf4yO_3IbczDDl5AeZp_sORWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "262199812612-8aub12pgk8fc00ksru0jgsdckoe4ib6j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.estiven.wpp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

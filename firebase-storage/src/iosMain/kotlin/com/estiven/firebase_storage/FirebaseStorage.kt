@@ -2,10 +2,14 @@ package com.estiven.firebase_storage
 
 import cocoapods.FirebaseStorage.FIRStorage
 import cocoapods.FirebaseStorage.FIRStorageReference
+import com.estiven.firebase_app.Firebase
 import com.eygraber.uri.Uri
 import kotlinx.coroutines.CompletableDeferred
 import platform.Foundation.NSError
 import platform.Foundation.NSURL
+
+actual val Firebase.storage: FirebaseStorage
+    get() = FirebaseStorage(FIRStorage.storage())
 
 actual class FirebaseStorage(private val ios: FIRStorage) {
     actual val reference: StorageReference = StorageReference(ios.reference())
@@ -17,14 +21,15 @@ actual class StorageReference actual constructor(
     internal actual val nativeValue: NativeStorageReference
 ) {
 
-    actual val reference: StorageReference = StorageReference(nativeValue)
+    //actual val reference: StorageReference = StorageReference(nativeValue)
 
     actual suspend fun downloadUrl(path: String): Uri? =
-        nativeValue.awaitResult { reference.downloadUrl(path) }
+        nativeValue.awaitResult {
+            downloadUrl(path)
+        }
 
 
-    actual fun child(pathString: String): StorageReference =
-        StorageReference(nativeValue.child(pathString))
+    //actual fun child(pathString: String): StorageReference = StorageReference(nativeValue.child(pathString))
 
     //actual suspend fun putFile(uri: com.eygraber.uri.Uri): TaskSnapshot = TaskSnapshot(nativeValue.putFile(uri.toAndroidUri()).await())
 }
@@ -40,9 +45,4 @@ internal suspend inline fun <T, reified R> T.awaitResult(function: T.(callback: 
         }
     }
     return job.await() as R
-}
-
-
-fun String.toNsURL(): NSURL {
-    return NSURL(this)
 }

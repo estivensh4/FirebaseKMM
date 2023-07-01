@@ -34,7 +34,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
-
+                api(project(":firebase-app"))
             }
         }
         val commonTest by getting {
@@ -45,7 +45,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 api("com.google.firebase:firebase-storage")
-                api("com.google.firebase:firebase-common")
+                //api("com.google.firebase:firebase-common")
             }
         }
         val androidUnitTest by getting
