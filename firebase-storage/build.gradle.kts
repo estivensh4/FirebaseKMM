@@ -22,10 +22,10 @@ kotlin {
         version = "1.0"
         ios.deploymentTarget = "14.1"
         framework {
-            baseName = "firebase-firestore"
+            baseName = "firebase-storage"
         }
         noPodspec()
-        pod("FirebaseFirestore") {
+        pod("FirebaseStorage") {
             version = "10.7.0"
         }
     }
@@ -33,8 +33,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":firebase-app"))
-                //implementation(project(":firebase-common"))
+                api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.0")
+
             }
         }
         val commonTest by getting {
@@ -44,7 +44,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-firestore")
+                api("com.google.firebase:firebase-storage")
+                api("com.google.firebase:firebase-common")
             }
         }
         val androidUnitTest by getting
@@ -70,7 +71,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.estiven.firebase_firestore"
+    namespace = "com.estiven.firebase_storage"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
