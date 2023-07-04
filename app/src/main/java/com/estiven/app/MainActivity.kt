@@ -18,8 +18,11 @@ import androidx.lifecycle.viewModelScope
 import com.estiven.app.ui.theme.FirebaseKMMTheme
 import com.estiven.firebase_app.Firebase
 import com.estiven.firebase_app.app
+import com.estiven.firebase_firestore.firestore
 import com.estiven.firebase_storage.storage
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -53,6 +56,10 @@ class ViewM() : ViewModel() {
     fun x() {
         viewModelScope.launch {
             Firebase.storage.reference
+            Firebase.firestore.collection("").
+            Firebase.firestore.collection("").snapshotListener.onEach {
+                it.querySnapshot.
+            }.launchIn(viewModelScope)
             //val y = Firebase.storage.reference.downloadUrl("images/22967b16-b32e-4572-a500-d6bacc755f99.jpg")
            val x = Firebase.storage.reference.downloadUrl("1.png")
             result = x != null
