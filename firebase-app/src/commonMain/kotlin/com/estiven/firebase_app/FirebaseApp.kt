@@ -20,10 +20,16 @@ expect fun Firebase.initialize(context: Any? = null): FirebaseApp?
 
 expect fun Firebase.initialize(context: Any? = null, options: FirebaseOptions): FirebaseApp?
 
-expect fun Firebase.initialize(context: Any? = null, options: FirebaseOptions, name: String): FirebaseApp?
+expect fun Firebase.initialize(
+    context: Any? = null,
+    options: FirebaseOptions,
+    name: String
+): FirebaseApp?
 
 val Firebase.options: FirebaseOptions
     get() = Firebase.app.options
+
+expect fun Firebase.apps(context: Any? = null): List<FirebaseApp>
 
 data class FirebaseOptions(
     val applicationId: String,

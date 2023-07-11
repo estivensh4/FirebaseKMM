@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -52,6 +53,7 @@ android {
 
 dependencies {
 val compose = "1.4.0"
+    val version = "1.0.2"
     implementation("com.eygraber:uri-kmp:0.0.3")
     implementation(project(":firebase-storage"))
     implementation(project(":firebase-firestore"))
@@ -69,4 +71,6 @@ val compose = "1.4.0"
     debugImplementation("androidx.compose.ui:ui-test-manifest:${compose}")
     implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation("io.getstream:stream-webrtc-android-compose:$version")
 }

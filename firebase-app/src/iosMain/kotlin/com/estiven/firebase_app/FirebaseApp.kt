@@ -39,6 +39,11 @@ actual fun Firebase.initialize(
 ): FirebaseApp? = FIRApp.configureWithName(name, options.toIos()).let { app }
 
 
+actual fun Firebase.apps(context: Any?) = FIRApp.allApps()
+    .orEmpty()
+    .values
+    .map { FirebaseApp(it as FIRApp) }
+
 private fun FirebaseOptions.toIos(): FIROptions {
     return FIROptions(this@toIos.applicationId, this@toIos.gcmSenderId ?: "").apply {
         APIKey = this@toIos.apiKey

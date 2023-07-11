@@ -37,6 +37,10 @@ actual fun Firebase.initialize(
 ): FirebaseApp? =
     FirebaseApp(firebaseGoogle.initializeApp(context as Context, options.toAndroid(), name))
 
+actual fun Firebase.apps(context: Any?) =
+    com.google.firebase.FirebaseApp.getApps(context as Context)
+        .map { FirebaseApp(it) }
+
 
 private fun FirebaseOptions.toAndroid(): com.google.firebase.FirebaseOptions {
     return com.google.firebase.FirebaseOptions.Builder()

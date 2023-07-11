@@ -4,28 +4,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.estiven.app.ui.theme.FirebaseKMMTheme
 import com.estiven.firebase_app.Firebase
-import com.estiven.firebase_app.app
-import com.estiven.firebase_firestore.FieldPath
+import com.estiven.firebase_firestore.Direction
 import com.estiven.firebase_firestore.firestore
-import com.estiven.firebase_storage.storage
-import com.google.firebase.firestore.MetadataChanges
-import kotlinx.coroutines.GlobalScope
+import com.google.firebase.Timestamp
+import io.getstream.webrtc.android.compose.FloatingVideoRenderer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
     private val viewM: ViewM = ViewM()
@@ -38,8 +36,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android ${viewM.result}")
+                    Greeting("Android ${viewM.result1}\n")
+                   /* LazyColumn{
+                        items(viewM.result){ item ->
+                            Greeting("Android ${item.fullName}\n")
+
+                        }
+                    }*/
                 }
+
             }
         }
     }
@@ -47,7 +52,9 @@ class MainActivity : ComponentActivity() {
 
 class ViewM() : ViewModel() {
 
-    var result by mutableStateOf(false)
+    var result = mutableStateListOf<User>()
+        private set
+    var result1 by mutableStateOf(User())
         private set
 
 
@@ -57,18 +64,54 @@ class ViewM() : ViewModel() {
 
     fun x() {
         viewModelScope.launch {
-            Firebase.firestore.collection("").snapshotListener.onEach {
-                it.documents.forEach { x ->
-                    x
-                }
-            }.launchIn(viewModelScope)
             //val y = Firebase.storage.reference.downloadUrl("images/22967b16-b32e-4572-a500-d6bacc755f99.jpg")
-           val x = Firebase.storage.reference.downloadUrl("1.png")
-            result = x != null
+            val collection =Firebase.firestore.collection("users").document("vYN231bEPrTtaQSyj9ZhVJYUF8m2")
+            collection.snapshotListener.onEach {
+                val list = it.toObject<User>()
+               result1 = list
+
+            }.launchIn(viewModelScope)
 
         }
     }
 }
+
+data class Chats(
+    val id: String = "",
+    val members: List<String> = emptyList(),
+    val whoIsWriting: String = "",
+    val notificationId: String = ""
+)
+
+@Serializable
+object StatusMessage {
+    const val SENT = 1
+    const val DELIVERED = 2
+    const val RECEIVED = 3
+}
+
+
+@Serializable
+object TypeMessage {
+    const val TEXT = 1
+    const val GIF = 2
+    const val PHOTO = 3
+    const val VIDEO = 4
+    const val AUDIO = 5
+    const val PDF = 6
+}
+
+data class User(
+    val id: String = "",
+    val fullName: String = "",
+    val image: String? = null,
+    val number: String = "",
+    val biography: String? = null,
+    val online: Boolean = false,
+    val token: String = "",
+    val username: String = "",
+    val lastConnection: Timestamp = Timestamp.now(),
+)
 
 
 @Composable

@@ -1,7 +1,9 @@
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 kotlin {
@@ -40,14 +42,28 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting {
             dependencies {
+                implementation("com.google.code.gson:gson:2.10.1")
+
                 api("com.google.firebase:firebase-firestore")
             }
         }
-        val androidUnitTest by getting
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.2")
+                implementation(kotlin("test-junit"))
+                implementation("junit:junit:4.13.2")
+                implementation("androidx.test:core:1.4.0")
+                implementation("androidx.test.ext:junit:1.1.3")
+                implementation("androidx.test:runner:1.4.0")
+            }
+        }
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -56,6 +72,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -74,5 +93,12 @@ android {
     compileSdk = 33
     defaultConfig {
         minSdk = 24
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lint {
+        abortOnError = false
+    }
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
     }
 }
