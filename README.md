@@ -217,7 +217,7 @@ These properties are only accessible from the equivalent target's source set. Fo
           .build()
 ```
 
-### NPM modules
+### NPM modu
 
 If you are building a Kotlin multiplatform library which will be consumed from JS code you may need to include the SDK in your `package.json`, you can do it as follows:
 
