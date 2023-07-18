@@ -10,9 +10,9 @@ The Firebase Kotlin SDK is a Kotlin-first SDK for Firebase. It's API is similar 
 
 The following libraries are available for the various Firebase products.
 
-| Service or Product	                                           | Gradle Dependency                                                                                                  | API Coverage                                                                                                                                                       |
-|---------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Cloud Firestore](https://firebase.google.com/docs/firestore) | [`com.estiven:firebase-firestore:1.0.0`](https://search.maven.org/artifact/com.estiven/firebase-storage/1.0.0/pom) | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-storage/src/commonMain/kotlin/com/estiven/firebase_storage/FirebaseStorage.kt) |
+| Service or Product	                                           | Gradle Dependency                                                                                                    | API Coverage                                                                                                                                                             |
+|---------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Cloud Firestore](https://firebase.google.com/docs/firestore) | [`com.estiven:firebase-firestore:1.0.0`](https://search.maven.org/artifact/com.estiven/firebase-firestore/1.0.0/pom) | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-firestore/src/commonMain/kotlin/com/estiven/firebase_firestore/FirebaseFirestore.kt) |
 
 
 
