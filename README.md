@@ -1,4 +1,4 @@
-<h1 align="left">FirebaseKMM<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/estivensh4/FirebaseKMM?style=flat-square"></h1>
+<h1 align="left">FirebaseKMM <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/estivensh4/FirebaseKMM?style=flat-square"></h1>
 
 FirebaseKMM is a Firebase Extension that supports cross-platform projects also based on <a href="hhttps://github.com/GitLiveApp/firebase-kotlin-sdk">Firebase Kotlin SDK</a>, allowing you to directly from iOS and Android.
 
