@@ -221,18 +221,4 @@ These properties are only accessible from the equivalent target's source set. Fo
 
 If you are building a Kotlin multiplatform library which will be consumed from JS code you may need to include the SDK in your `package.json`, you can do it as follows:
 
-```json
-"dependencies": {
-  "@gitlive/firebase-auth": "1.8.0",
-  "@gitlive/firebase-config": "1.8.0",
-  "@gitlive/firebase-database": "1.8.0",
-  "@gitlive/firebase-firestore": "1.8.0",
-  "@gitlive/firebase-functions": "1.8.0",
-  "@gitlive/firebase-installations": "1.8.0",
-  "@gitlive/firebase-messaging": "1.8.0",
-  "@gitlive/firebase-storage": "1.8.0"
-  "@gitlive/firebase-perf": "1.8.0"
-  "@gitlive/firebase-crashlytics": "1.8.0"
-}
-```
 
