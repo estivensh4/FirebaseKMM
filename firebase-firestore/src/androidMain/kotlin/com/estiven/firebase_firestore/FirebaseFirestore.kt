@@ -34,8 +34,8 @@ actual class FirebaseFirestore(private val android: firebaseFirestore) {
 
     actual val firestoreSettings
         get() = FirestoreSettings(android.firestoreSettings)
-    actual val app
-        get() = FirestoreApp(android.app)
+    //actual val app
+      //  get() = FirestoreApp(android.app)
 
     actual fun collection(collectionPath: String) =
         CollectionReference(android.collection(collectionPath))

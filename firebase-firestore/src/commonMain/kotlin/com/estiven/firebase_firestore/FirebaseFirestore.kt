@@ -28,7 +28,7 @@ expect enum class DocumentType
 
 expect class FirebaseFirestore {
     val firestoreSettings: FirestoreSettings
-    val app: FirestoreApp
+    //val app: FirestoreApp
     fun collection(collectionPath: String): CollectionReference
     fun collectionGroup(collectionId: String): Query
     fun document(documentPath: String): DocumentReference

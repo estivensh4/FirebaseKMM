@@ -1,0 +1,31 @@
+{
+  "name": "@estivensh4/firebase-storage",
+  "version": "0.0.1",
+  "description": "Wrapper around firebase for usage in Kotlin Multiplatform projects",
+  "main": "firebase-app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estivensh4/FirebaseKMM.git"
+  },
+  "keywords": [
+    "kotlin",
+    "multiplatform",
+    "kotlin-js",
+    "firebase"
+  ],
+  "author": "io.github.estivensh4",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/estivensh4/FirebaseKMM/issues"
+  },
+  "homepage": "https://github.com/estivensh4/FirebaseKMM",
+  "dependencies": {
+    "@estivensh4/firebase-common": "0.0.1",
+    "firebase": "9.19.1",
+    "kotlin": "1.8.20",
+    "kotlinx-coroutines-core": "1.6.4"
+  }
+}

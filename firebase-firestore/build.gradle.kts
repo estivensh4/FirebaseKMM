@@ -1,4 +1,4 @@
-
+version = project.property("firebase-firestore.version") as String
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -8,27 +8,26 @@ plugins {
 
 kotlin {
     android {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
+        publishAllLibraryVariants()
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    val supportIosTarget = project.property("skipIosTarget") != "true"
+    if(supportIosTarget){
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
 
-    cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "firebase-firestore"
-        }
-        noPodspec()
-        pod("FirebaseFirestore") {
-            version = "10.7.0"
+        cocoapods {
+            summary = "Some description for the Shared Module"
+            homepage = "Link to the Shared Module homepage"
+            version = "1.0"
+            ios.deploymentTarget = "16.1"
+            framework {
+                baseName = "firebase-firestore"
+            }
+            noPodspec()
+            pod("FirebaseFirestore") {
+                version = "10.11.0"
+            }
         }
     }
     
@@ -49,7 +48,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("com.google.code.gson:gson:2.10.1")
-
                 api("com.google.firebase:firebase-firestore")
             }
         }
@@ -64,26 +62,25 @@ kotlin {
                 implementation("androidx.test:runner:1.4.0")
             }
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+        if (supportIosTarget){
+            val iosX64Main by getting
+            val iosArm64Main by getting
+            val iosSimulatorArm64Main by getting
+            val iosMain by creating {
+                dependsOn(commonMain)
+                iosX64Main.dependsOn(this)
+                iosArm64Main.dependsOn(this)
+                iosSimulatorArm64Main.dependsOn(this)
             }
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+            val iosX64Test by getting
+            val iosArm64Test by getting
+            val iosSimulatorArm64Test by getting
+            val iosTest by creating {
+                dependsOn(commonTest)
+                iosX64Test.dependsOn(this)
+                iosArm64Test.dependsOn(this)
+                iosSimulatorArm64Test.dependsOn(this)
+            }
         }
     }
 }
@@ -101,4 +98,17 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
+}
+
+if (project.property("firebase-firestore.skipIosTests") == "true") {
+    tasks.forEach {
+        if (it.name.contains("ios", true) && it.name.contains("test", true)) { it.enabled = false }
+    }
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    //useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications)
 }

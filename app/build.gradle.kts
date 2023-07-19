@@ -57,6 +57,7 @@ val compose = "1.4.0"
     implementation("com.eygraber:uri-kmp:0.0.3")
     implementation(project(":firebase-storage"))
     implementation(project(":firebase-firestore"))
+    implementation("io.github.estivensh4:firebase-app:0.0.1")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("androidx.activity:activity-compose:1.3.1")
@@ -74,3 +75,4 @@ val compose = "1.4.0"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("io.getstream:stream-webrtc-android-compose:$version")
 }
+
