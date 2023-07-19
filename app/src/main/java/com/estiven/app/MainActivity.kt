@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.estiven.app.ui.theme.FirebaseKMMTheme
 import com.estiven.firebase_app.Firebase
+import com.estiven.firebase_app.FirebaseApp
 import com.estiven.firebase_firestore.Direction
 import com.estiven.firebase_firestore.firestore
 import com.google.firebase.Timestamp
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            Firebase
             FirebaseKMMTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(

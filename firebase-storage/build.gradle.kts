@@ -1,36 +1,38 @@
+version = project.property("firebase-storage.version") as String
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id ("org.jetbrains.kotlinx.kover")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 kotlin {
     android {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
+        publishAllLibraryVariants()
+    }
+
+    val supportIosTarget = project.property("skipIosTarget") != "true"
+
+    if (supportIosTarget) {
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
+        cocoapods {
+            summary = "Some description for the Shared Module"
+            homepage = "Link to the Shared Module homepage"
+            version = "1.0"
+            ios.deploymentTarget = "16.1"
+            framework {
+                baseName = "firebase-storage"
+            }
+            noPodspec()
+            pod("FirebaseStorage") {
+                version = "10.11.0"
             }
         }
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
 
-    cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "firebase-storage"
-        }
-        noPodspec()
-        pod("FirebaseStorage") {
-            version = "10.7.0"
-        }
-    }
-    
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -50,23 +52,25 @@ kotlin {
             }
         }
         val androidUnitTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+        if (supportIosTarget) {
+            val iosX64Main by getting
+            val iosArm64Main by getting
+            val iosSimulatorArm64Main by getting
+            val iosMain by creating {
+                dependsOn(commonMain)
+                iosX64Main.dependsOn(this)
+                iosArm64Main.dependsOn(this)
+                iosSimulatorArm64Main.dependsOn(this)
+            }
+            val iosX64Test by getting
+            val iosArm64Test by getting
+            val iosSimulatorArm64Test by getting
+            val iosTest by creating {
+                dependsOn(commonTest)
+                iosX64Test.dependsOn(this)
+                iosArm64Test.dependsOn(this)
+                iosSimulatorArm64Test.dependsOn(this)
+            }
         }
     }
 }
@@ -76,5 +80,18 @@ android {
     compileSdk = 33
     defaultConfig {
         minSdk = 24
+    }
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    //useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications)
+}
+
+if (project.property("firebase-storage.skipIosTests") == "true") {
+    tasks.forEach {
+        if (it.name.contains("ios", true) && it.name.contains("test", true)) { it.enabled = false }
     }
 }

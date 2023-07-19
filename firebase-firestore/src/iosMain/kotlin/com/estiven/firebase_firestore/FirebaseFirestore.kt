@@ -30,8 +30,8 @@ actual typealias NativeAggregateQuery = FIRAggregateQuery
 actual class FirebaseFirestore(private val iOS: FIRFirestore) {
     actual val firestoreSettings
         get() = FirestoreSettings(iOS.settings)
-    actual val app
-        get() = FirestoreApp(iOS.app as FIRApp)
+    //actual val app
+        //get() = FirestoreApp(iOS.app as FIRApp)
 
     actual fun collection(collectionPath: String) =
         CollectionReference(iOS.collectionWithPath(collectionPath))

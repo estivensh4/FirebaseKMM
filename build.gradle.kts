@@ -1,35 +1,57 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
+repositories {
+    google()
+    mavenCentral()
+}
 
 plugins {
-    //trick: for the same plugin versions in all sub-modules
     id("com.android.library").version("7.4.2").apply(false)
     kotlin("multiplatform").version("1.8.10").apply(false)
     kotlin("plugin.serialization").version("1.8.10")
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
     id("org.sonarqube") version "4.2.1.3168"
+    id("base")
+    id("com.github.ben-manes.versions") version "0.47.0"
+
+}
+
+tasks {
+    val updateVersions by registering {
+        dependsOn(
+            "firebase-app:updateVersion", "firebase-app:updateDependencyVersion",
+        )
+    }
 }
 
 apply(plugin = "org.jetbrains.kotlinx.kover")
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
+val targetSdkVersion by extra(32)
+val minSdkVersion by extra(19)
 
 buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
     dependencies {
         classpath("com.google.gms:google-services:4.3.15")
         classpath("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.2")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.2.1.3168")
     }
+
 }
 
 subprojects {
-    if (project.name != "app"){
+    group = "io.github.estivensh4"
+
+    if (project.name != "app") {
         afterEvaluate {
             dependencies {
                 "commonMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-                "commonMainImplementation"("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
-                "commonMainImplementation"("com.google.code.gson:gson:2.10.1")
+                "commonMainImplementation"("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
                 "commonMainImplementation"("com.eygraber:uri-kmp:0.0.3")
                 "androidMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
                 "androidMainImplementation"(platform("com.google.firebase:firebase-bom:32.1.1"))
@@ -37,6 +59,73 @@ subprojects {
                 "commonTestImplementation"(kotlin("test-annotations-common"))
                 "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
                 "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+            }
+        }
+
+        repositories {
+            mavenLocal()
+            google()
+            mavenCentral()
+        }
+        apply(plugin = "maven-publish")
+        apply(plugin = "signing")
+
+        tasks.withType<Sign>().configureEach {
+            onlyIf { !project.gradle.startParameter.taskNames.contains("publishToMavenLocal") }
+        }
+
+        configure<PublishingExtension> {
+            repositories {
+                maven {
+                    url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                    credentials {
+                        username =
+                            project.findProperty("sonatypeUsername") as String? ?: System.getenv(
+                                "sonatypeUsername"
+                            )
+                        password =
+                            project.findProperty("sonatypePassword") as String? ?: System.getenv(
+                                "sonatypePassword"
+                            )
+                    }
+                }
+                publications.all {
+                    this as MavenPublication
+                    pom {
+                        name.set("FirebaseKMM")
+                        description.set("FirebaseKMM is a Firebase Extension that supports cross-platform projects also based on Firebase Kotlin SDK, allowing you to directly from iOS and Android.")
+                        url.set("https://github.com/estivensh4/FirebaseKMM")
+                        inceptionYear.set("2023")
+
+                        scm {
+                            url.set("https://github.com/estivensh4/FirebaseKMM")
+                            connection.set("scm:git:https://github.com/estivensh4/FirebaseKMM")
+                            developerConnection.set("scm:git:https://github.com/estivensh4/FirebaseKMM")
+                            tag.set("HEAD")
+                        }
+
+                        issueManagement {
+                            system.set("GitHub Issues")
+                            url.set("https://github.com/estivensh4/FirebaseKMM/issues")
+                        }
+
+                        developers {
+                            developer {
+                                name.set("Estiven Sánchez")
+                                email.set("estivensh4@gmail.com")
+                            }
+                        }
+
+                        licenses {
+                            license {
+                                name.set("The Apache Software License, Version 2.0")
+                                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                                distribution.set("repo")
+                                comments.set("A business-friendly OSS license")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -122,5 +211,22 @@ koverReport {
 
 }
 
-tasks.sonarqube.dependsOn(":clean")
-tasks.sonarqube.dependsOn(":koverXmlReport")
+tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask> {
+
+    fun isNonStable(version: String): Boolean {
+        val stableKeyword =
+            listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+        val versionMatch = "^[0-9,.v-]+(-r)?$".toRegex().matches(version)
+
+        return (stableKeyword || versionMatch).not()
+    }
+
+    rejectVersionIf {
+        isNonStable(candidate.version)
+    }
+
+    checkForGradleUpdate = true
+    outputFormatter = "plain,html"
+    outputDir = "build/dependency-reports"
+    reportfileName = "dependency-updates"
+}
