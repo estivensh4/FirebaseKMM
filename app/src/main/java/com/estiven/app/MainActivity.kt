@@ -21,11 +21,14 @@ import com.estiven.firebase_app.Firebase
 import com.estiven.firebase_auth.PhoneAuthProvider
 import com.estiven.firebase_auth.PhoneAuthResult
 import com.estiven.firebase_auth.PhoneAuthVerifyNumber
+import com.estiven.firebase_auth.auth
 import com.estiven.firebase_firestore.firestore
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.Serializable
 import java.util.concurrent.TimeUnit
 
@@ -95,6 +98,13 @@ class ViewM() : ViewModel() {
     fun sendVerifyPhoneNumber(
         activity1: Activity
     ) {
+       /* val auth = FirebaseAuth.getInstance()
+        auth.currentUser?.metadata.creationTimestamp
+
+        auth.createUserWithEmailAndPassword("", "").await()
+
+        auth.signInAnonymously().await().additionalUserInfo.isNewUser
+
         viewModelScope.launch {
             val phoneAuthVerifyNumber = object : PhoneAuthVerifyNumber {
                 override val activity: Activity
@@ -103,7 +113,6 @@ class ViewM() : ViewModel() {
                     get() = 60L
                 override val timeunit: TimeUnit
                     get() = TimeUnit.SECONDS
-
             }
 
             val x = PhoneAuthProvider().verifyPhoneNumber(
@@ -111,7 +120,7 @@ class ViewM() : ViewModel() {
                 phoneAuthVerifyNumber = phoneAuthVerifyNumber
             )
             result2 = x
-        }
+        }*/
     }
 }
 
