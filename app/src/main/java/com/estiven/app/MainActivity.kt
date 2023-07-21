@@ -88,7 +88,7 @@ class ViewM() : ViewModel() {
                 Firebase.firestore.collection("users").document("vYN231bEPrTtaQSyj9ZhVJYUF8m2")
             collection.snapshotListener.onEach {
                 val list = it.toObject<User>()
-                result1 = list
+                //result1 = list
 
             }.launchIn(viewModelScope)
 

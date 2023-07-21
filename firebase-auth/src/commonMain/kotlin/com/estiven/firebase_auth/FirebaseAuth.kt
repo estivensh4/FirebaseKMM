@@ -24,4 +24,5 @@ expect class FirebaseAuth {
     suspend fun signInWithCredential(credential: AuthCredential): AuthResult
     fun signOut()
     fun useAppLanguage()
+    fun useEmulator(host: String, port: Int)
 }

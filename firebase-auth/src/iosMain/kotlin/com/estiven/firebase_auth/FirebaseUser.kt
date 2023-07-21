@@ -2,7 +2,7 @@ package com.estiven.firebase_auth
 
 import cocoapods.FirebaseAuth.FIRUser
 
-actual class FirebaseUser(val iOS: FIRUser) {
+actual class FirebaseUser internal constructor(val iOS: FIRUser) {
     actual val phoneNumber get() = iOS.phoneNumber
     actual val isAnonymous get() = iOS.isAnonymous()
     actual val displayName get() = iOS.displayName

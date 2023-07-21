@@ -9,5 +9,5 @@ actual class DocumentSnapshot(val android: NativeDocumentSnapshot) {
     actual fun get(fieldPath: FieldPath, serverTimestampBehavior: ServerTimestampBehavior) =
         android.get(fieldPath.android, serverTimestampBehavior)
 
-    actual inline fun <reified T : Any> toObject() = mapToObject(android.data!!.toMap(), T::class)
+    actual inline fun <reified T : Any> toObject() = android.toObject(T::class.java)
 }

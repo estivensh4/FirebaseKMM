@@ -3,10 +3,12 @@ repositories {
     mavenCentral()
 }
 
+
+
 plugins {
-    id("com.android.library").version("7.4.2").apply(false)
-    kotlin("multiplatform").version("1.8.10").apply(false)
-    kotlin("plugin.serialization").version("1.8.10")
+    id("com.android.library").version("8.0.2").apply(false)
+    kotlin("multiplatform").version("1.8.21").apply(false)
+    kotlin("plugin.serialization").version("1.8.21")
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
     id("org.sonarqube") version "4.2.1.3168"
     id("base")
@@ -24,8 +26,9 @@ tasks {
 
 apply(plugin = "org.jetbrains.kotlinx.kover")
 
-val targetSdkVersion by extra(32)
-val minSdkVersion by extra(19)
+
+
+
 
 buildscript {
     repositories {
@@ -38,27 +41,56 @@ buildscript {
     }
     dependencies {
         classpath("com.google.gms:google-services:4.3.15")
+        classpath("com.adarshr:gradle-test-logger-plugin:3.2.0")
         classpath("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.2")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.2.1.3168")
     }
 
 }
 
-subprojects {
-    group = "io.github.estivensh4"
+val targetSdkVersion by extra(32)
+val minSdkVersion by extra(19)
 
+subprojects {
     if (project.name != "app") {
+        group = "io.github.estivensh4"
+        apply(plugin = "com.adarshr.test-logger")
+
+        tasks.withType<Test> {
+            testLogging {
+                showExceptions = true
+                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+                showStandardStreams = true
+                showCauses = true
+                showStackTraces = true
+                events = setOf(
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
+                    org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
+                )
+            }
+        }
         afterEvaluate {
             dependencies {
                 "commonMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-                "commonMainImplementation"("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
-                "commonMainImplementation"("com.eygraber:uri-kmp:0.0.3")
                 "androidMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
                 "androidMainImplementation"(platform("com.google.firebase:firebase-bom:32.1.1"))
                 "commonTestImplementation"(kotlin("test-common"))
                 "commonTestImplementation"(kotlin("test-annotations-common"))
                 "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
                 "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+                "androidUnitTestImplementation"(kotlin("test-junit"))
+                "androidUnitTestImplementation"("junit:junit:4.13.2")
+                "androidUnitTestImplementation"("androidx.test:core:1.5.0")
+                "androidUnitTestImplementation"("androidx.test.ext:junit:1.1.5")
+                "androidUnitTestImplementation"("androidx.test:runner:1.5.2")
+                "androidUnitTestImplementation"("androidx.test:rules:1.5.0")
+                "androidUnitTestImplementation"("io.mockk:mockk:1.13.5")
+                "androidUnitTestImplementation"("org.robolectric:robolectric:4.9.2")
+                "commonMainImplementation"("com.eygraber:uri-kmp:0.0.3")
             }
         }
 
@@ -211,6 +243,7 @@ koverReport {
 
 }
 
+/*
 tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask> {
 
     fun isNonStable(version: String): Boolean {
@@ -230,3 +263,5 @@ tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
     outputDir = "build/dependency-reports"
     reportfileName = "dependency-updates"
 }
+*/
+

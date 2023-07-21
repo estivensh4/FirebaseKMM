@@ -9,5 +9,5 @@ actual class DocumentSnapshot(val iOS: NativeDocumentSnapshot) {
     actual fun get(fieldPath: FieldPath, serverTimestampBehavior: ServerTimestampBehavior) =
         iOS.valueForField(fieldPath, serverTimestampBehavior)
 
-    actual inline fun <reified T : Any> toObject() = iOS.data() as T
+    actual inline fun <reified T : Any> toObject(): T? = iOS.data() as T
 }

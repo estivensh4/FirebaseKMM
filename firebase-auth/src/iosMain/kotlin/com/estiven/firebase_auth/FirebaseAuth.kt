@@ -161,4 +161,6 @@ actual class FirebaseAuth(val iOS: FIRAuth) {
      * @return
      */
     actual fun useAppLanguage() = iOS.useAppLanguage()
+
+    actual fun useEmulator(host: String, port: Int) = iOS.useEmulatorWithHost(host, port.toLong())
 }

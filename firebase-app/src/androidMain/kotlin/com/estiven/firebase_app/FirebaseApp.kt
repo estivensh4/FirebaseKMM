@@ -1,3 +1,4 @@
+@file:JvmName("tests")
 package com.estiven.firebase_app
 
 import android.content.Context
@@ -14,7 +15,8 @@ actual class FirebaseApp internal constructor(private val android: firebaseGoogl
                 databaseUrl = databaseUrl,
                 gaTrackingId = gaTrackingId,
                 storageBucket = storageBucket,
-                projectId = projectId
+                projectId = projectId,
+                gcmSenderId = gcmSenderId
             )
         }
 

@@ -6,7 +6,9 @@ plugins {
     id("com.android.library")
 }
 
+@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    targetHierarchy.default()
     android {
         compilations.all {
             kotlinOptions {
@@ -41,6 +43,8 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(kotlin("test-common"))
+                implementation("junit:junit:4.13.2")
             }
         }
         val androidMain by getting {
@@ -48,32 +52,35 @@ kotlin {
                 api("com.google.firebase:firebase-auth")
             }
         }
-        val androidUnitTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
-        }
     }
 }
+
 
 android {
     namespace = "com.estiven.firebase_auth"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        }
+        getByName("androidTest") {
+            java.srcDir(file("src/androidUnitTest/kotlin"))
+            manifest.srcFile("src/androidUnitTest/AndroidManifest.xml")
+        }
+    }
+    packagingOptions {
+        resources.pickFirsts.add("META-INF/kotlinx-serialization-core.kotlin_module")
+        resources.pickFirsts.add("META-INF/AL2.0")
+        resources.pickFirsts.add("META-INF/LGPL2.1")
+    }
+    lint {
+        abortOnError = false
     }
 }
