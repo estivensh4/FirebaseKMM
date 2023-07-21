@@ -26,6 +26,7 @@ actual class QuerySnapshot(val iOS: FIRQuerySnapshot) {
                 DocumentChange(it as FIRDocumentChange)
             }.toMutableList()
 
+    @Suppress("UNCHECKED_CAST")
     actual inline fun <reified T : Any> toObjects() = iOS.documents as List<T>
 
 }

@@ -17,7 +17,5 @@ actual class QuerySnapshot(val android: com.google.firebase.firestore.QuerySnaps
         android.getDocumentChanges(metadataChanges).map { DocumentChange(it) }
             .toMutableList()
 
-    actual inline fun <reified T : Any> toObjects() = android.documents.map {
-        mapToObject(it.data!!.toMap(), T::class)
-    }
+    actual inline fun <reified T : Any> toObjects() = android.toObjects(T::class.java)
 }
