@@ -2,7 +2,7 @@ package com.estiven.firebase_auth
 
 import kotlinx.coroutines.tasks.await
 
-actual class FirebaseUser internal constructor( val android: com.google.firebase.auth.FirebaseUser) {
+actual class FirebaseUser internal constructor(internal val android: com.google.firebase.auth.FirebaseUser) {
     actual val phoneNumber get() = android.phoneNumber
     actual val isAnonymous get() = android.isAnonymous
     actual val displayName get() = android.displayName

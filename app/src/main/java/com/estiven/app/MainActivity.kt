@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     val context = LocalContext.current
                     val activity = context as Activity
                     Column {
-                        Greeting("Android ${viewM.result2}\n")
+                        Greeting("Android ${viewM.result3}\n")
                         Button(onClick = {
                             viewM.sendVerifyPhoneNumber(activity)
                         }) {
@@ -75,10 +75,13 @@ class ViewM() : ViewModel() {
         private set
     var result2 by mutableStateOf<PhoneAuthResult?>(null)
         private set
+    var result3 by mutableStateOf("")
+        private set
 
 
     init {
         x()
+        createUser()
     }
 
     fun x() {
@@ -91,6 +94,21 @@ class ViewM() : ViewModel() {
                 //result1 = list
 
             }.launchIn(viewModelScope)
+
+        }
+    }
+
+    fun createUser(){
+        viewModelScope.launch {
+            result3 = try {
+                val x = Firebase.auth.createUserWithEmailAndPassword("prueba6@yopmail.com", "12345678")
+
+                x.user
+
+                x.toString()
+            } catch (exception: Exception){
+                exception.toString()
+            }
 
         }
     }

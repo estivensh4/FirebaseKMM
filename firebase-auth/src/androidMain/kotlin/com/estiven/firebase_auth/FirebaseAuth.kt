@@ -11,7 +11,7 @@ import kotlinx.coroutines.tasks.await
 actual val Firebase.auth
     get() = FirebaseAuth(com.google.firebase.auth.FirebaseAuth.getInstance())
 
-actual class FirebaseAuth internal constructor(val android: com.google.firebase.auth.FirebaseAuth) {
+actual class FirebaseAuth internal constructor(internal val android: com.google.firebase.auth.FirebaseAuth) {
 
     actual val currentUser get() = android.currentUser?.let { FirebaseUser(it) }
 

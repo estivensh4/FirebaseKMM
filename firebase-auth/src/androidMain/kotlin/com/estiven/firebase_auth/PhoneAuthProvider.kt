@@ -8,7 +8,7 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 import com.google.firebase.auth.PhoneAuthProvider as phoneAuthProvider
 
-actual class PhoneAuthProvider(val android: phoneAuthProvider) {
+actual class PhoneAuthProvider(internal val android: phoneAuthProvider) {
 
     private lateinit var auth: FirebaseAuth
 
