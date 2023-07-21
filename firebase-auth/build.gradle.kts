@@ -84,3 +84,7 @@ android {
         abortOnError = false
     }
 }
+
+signing {
+    sign(publishing.publications)
+}

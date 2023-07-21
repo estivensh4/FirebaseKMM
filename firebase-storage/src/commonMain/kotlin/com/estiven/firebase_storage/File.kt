@@ -1,4 +1,3 @@
 package com.estiven.firebase_storage
 
-class AndroidGreetingTest {
-}
+expect class File

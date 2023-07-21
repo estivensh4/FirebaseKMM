@@ -1,48 +1,72 @@
 package com.estiven.firebase_storage
 
 import cocoapods.FirebaseStorage.FIRStorage
-import cocoapods.FirebaseStorage.FIRStorageReference
 import com.estiven.firebase_app.Firebase
-import com.eygraber.uri.Uri
-import kotlinx.coroutines.CompletableDeferred
-import platform.Foundation.NSError
-import platform.Foundation.NSURL
 
 actual val Firebase.storage: FirebaseStorage
     get() = FirebaseStorage(FIRStorage.storage())
 
-actual class FirebaseStorage(private val ios: FIRStorage) {
-    actual val reference: StorageReference = StorageReference(ios.reference())
-}
+actual class FirebaseStorage(private val iOS: FIRStorage) {
+    actual val reference get() = StorageReference(iOS.reference())
+    actual val maxDownloadRetryTime get() = iOS.maxDownloadRetryTime().toLong()
+    actual val maxUploadRetryTime get() = iOS.maxUploadRetryTime().toLong()
+    actual val maxOperationRetryTime get() = iOS.maxOperationRetryTime().toLong()
+    actual val uploadChunkSizeBytes get() = iOS.uploadChunkSizeBytes()
 
-actual typealias NativeStorageReference = FIRStorageReference
+    /**
+     * Get reference url.
+     *
+     * @param url Url
+     * @return
+     */
+    actual fun getReferenceUrl(url: String) = StorageReference(iOS.referenceForURL(url))
 
-actual class StorageReference actual constructor(
-    internal actual val nativeValue: NativeStorageReference
-) {
+    /**
+     * Get reference path.
+     *
+     * @param path Path
+     * @return
+     */
+    actual fun getReferencePath(path: String) = StorageReference(iOS.referenceWithPath(path))
 
-    //actual val reference: StorageReference = StorageReference(nativeValue)
-
-    actual suspend fun downloadUrl(path: String): Uri? =
-        nativeValue.awaitResult {
-            downloadUrl(path)
-        }
-
-
-    //actual fun child(pathString: String): StorageReference = StorageReference(nativeValue.child(pathString))
-
-    //actual suspend fun putFile(uri: com.eygraber.uri.Uri): TaskSnapshot = TaskSnapshot(nativeValue.putFile(uri.toAndroidUri()).await())
-}
-
-
-internal suspend inline fun <T, reified R> T.awaitResult(function: T.(callback: (R?, NSError?) -> Unit) -> Unit): R {
-    val job = CompletableDeferred<R?>()
-    function { result, error ->
-        if (error == null) {
-            job.complete(result)
-        } else {
-            job.completeExceptionally(Exception(error.toString()))
-        }
+    /**
+     * Set max download retry time.
+     *
+     * @param maxDownloadRetryTime Max download retry time
+     */
+    actual fun setMaxDownloadRetryTime(maxDownloadRetryTime: Long) {
+        iOS.setMaxDownloadRetryTime(maxDownloadRetryTime.toDouble())
     }
-    return job.await() as R
+
+    /**
+     * Set max upload retry time.
+     *
+     * @param maxUploadRetryTime Max upload retry time
+     */
+    actual fun setMaxUploadRetryTime(maxUploadRetryTime: Long) {
+        iOS.setMaxUploadRetryTime(maxUploadRetryTime.toDouble())
+    }
+
+    actual fun setMaxOperationRetryTime(maxOperationRetryTime: Long) {
+        iOS.setMaxOperationRetryTime(maxOperationRetryTime.toDouble())
+    }
+
+    /**
+     * Set upload chunk size bytes.
+     *
+     * @param uploadChunkSizeBytes Upload chunk size bytes
+     */
+    actual fun setUploadChunkSizeBytes(uploadChunkSizeBytes: Long) {
+        iOS.setUploadChunkSizeBytes(uploadChunkSizeBytes)
+    }
+
+    /**
+     * Use emulator.
+     *
+     * @param host Host
+     * @param port Port
+     */
+    actual fun useEmulator(host: String, port: Int) {
+        iOS.useEmulatorWithHost(host, port.toLong())
+    }
 }
