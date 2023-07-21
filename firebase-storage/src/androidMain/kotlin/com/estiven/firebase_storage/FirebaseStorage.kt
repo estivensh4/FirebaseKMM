@@ -1,32 +1,82 @@
 package com.estiven.firebase_storage
 
 import com.estiven.firebase_app.Firebase
-import com.eygraber.uri.Uri
-import com.eygraber.uri.toUriOrNull
-import kotlinx.coroutines.tasks.await
-
 
 actual val Firebase.storage
     get() = FirebaseStorage(com.google.firebase.storage.FirebaseStorage.getInstance())
 
-actual class FirebaseStorage(private val android: com.google.firebase.storage.FirebaseStorage) {
+/**
+ * Firebase storage.
+ *
+ * @property android
+ * @constructor Create [FirebaseStorage]
+ */
+actual class FirebaseStorage(internal val android: com.google.firebase.storage.FirebaseStorage) {
     actual val reference: StorageReference = StorageReference(android.reference)
-}
+    actual val maxDownloadRetryTime get() = android.maxDownloadRetryTimeMillis
+    actual val maxUploadRetryTime get() = android.maxUploadRetryTimeMillis
+    actual val maxOperationRetryTime get() = android.maxOperationRetryTimeMillis
+    actual val uploadChunkSizeBytes get() = android.maxChunkUploadRetry
 
-actual typealias NativeStorageReference = com.google.firebase.storage.StorageReference
+    /**
+     * Get reference url.
+     *
+     * @param url Url
+     * @return
+     */
+    actual fun getReferenceUrl(url: String) = StorageReference(android.getReferenceFromUrl(url))
 
-actual class StorageReference actual constructor(
-    internal actual val nativeValue: NativeStorageReference
-) {
+    /**
+     * Get reference path.
+     *
+     * @param path Path
+     * @return
+     */
+    actual fun getReferencePath(path: String) = StorageReference(android.getReference(path))
 
-    //actual val reference: StorageReference = StorageReference(nativeValue)
-
-    actual suspend fun downloadUrl(path: String): Uri? {
-
-        return  nativeValue.child(path).downloadUrl.await().run {
-            toUriOrNull()
-        }
+    /**
+     * Set max download retry time.
+     *
+     * @param maxDownloadRetryTime Max download retry time
+     */
+    actual fun setMaxDownloadRetryTime(maxDownloadRetryTime: Long) {
+        android.maxDownloadRetryTimeMillis = maxDownloadRetryTime
     }
 
-    //actual suspend fun putFile(uri: com.eygraber.uri.Uri): TaskSnapshot = TaskSnapshot(nativeValue.putFile(uri.toAndroidUri()).await())
+    /**
+     * Set max upload retry time.
+     *
+     * @param maxUploadRetryTime Max upload retry time
+     */
+    actual fun setMaxUploadRetryTime(maxUploadRetryTime: Long) {
+        android.maxUploadRetryTimeMillis = maxUploadRetryTime
+    }
+
+    /**
+     * Set max operation retry time.
+     *
+     * @param maxOperationRetryTime Max operation retry time
+     */
+    actual fun setMaxOperationRetryTime(maxOperationRetryTime: Long) {
+        android.maxOperationRetryTimeMillis = maxOperationRetryTime
+    }
+
+    /**
+     * Set upload chunk size bytes.
+     *
+     * @param uploadChunkSizeBytes Upload chunk size bytes
+     */
+    actual fun setUploadChunkSizeBytes(uploadChunkSizeBytes: Long) {
+        android.maxChunkUploadRetry = uploadChunkSizeBytes
+    }
+
+    /**
+     * Use emulator.
+     *
+     * @param host Host
+     * @param port Port
+     */
+    actual fun useEmulator(host: String, port: Int) {
+        android.useEmulator(host, port)
+    }
 }

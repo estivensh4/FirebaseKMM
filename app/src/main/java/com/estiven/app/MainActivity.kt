@@ -1,6 +1,7 @@
 package com.estiven.app
 
 import android.app.Activity
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,19 +19,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.estiven.app.ui.theme.FirebaseKMMTheme
 import com.estiven.firebase_app.Firebase
-import com.estiven.firebase_auth.PhoneAuthProvider
 import com.estiven.firebase_auth.PhoneAuthResult
-import com.estiven.firebase_auth.PhoneAuthVerifyNumber
 import com.estiven.firebase_auth.auth
 import com.estiven.firebase_firestore.firestore
+import com.estiven.firebase_storage.File
+import com.estiven.firebase_storage.UploadResult
+import com.estiven.firebase_storage.storage
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.Serializable
-import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
     private val viewM: ViewM = ViewM()
@@ -139,6 +138,23 @@ class ViewM() : ViewModel() {
             )
             result2 = x
         }*/
+    }
+
+    fun testStorage(){
+        Firebase.storage.getReferencePath("ejaej").putFile(File(Uri.parse(""))).onEach {
+            when(it){
+                is UploadResult.Progress -> {
+
+                }
+                is UploadResult.Success -> {
+                    it.storage.downloadUrl()
+                }
+
+                UploadResult.Paused -> {
+
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 }
 

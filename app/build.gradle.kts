@@ -54,6 +54,7 @@ val compose = "1.4.3"
     implementation(project(":firebase-storage"))
     implementation(project(":firebase-firestore"))
     implementation(project(":firebase-auth"))
+    implementation(project(":firebase-storage"))
     //implementation("io.github.estivensh4:firebase-app:0.0.1")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
