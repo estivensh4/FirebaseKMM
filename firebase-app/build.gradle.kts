@@ -1,11 +1,12 @@
-version = project.property("firebase-app.version") as String
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.kotlinx.kover")
 }
+
+group = "io.github.estivensh4"
+version = "0.5.1"
 
 repositories {
     google()
@@ -71,9 +72,9 @@ android {
     }
 }
 
-signing {
+/*signing {
     sign(publishing.publications)
-}
+}*/
 
 if (project.property("firebase-app.skipIosTests") == "true") {
     tasks.forEach {
@@ -82,3 +83,11 @@ if (project.property("firebase-app.skipIosTests") == "true") {
         }
     }
 }
+
+rootProject.ext.apply {
+    set("PUBLISH_GROUP_ID", com.estiven.buildsrc.Configuration.artifactGroup)
+    set("PUBLISH_ARTIFACT_ID", "firebase-app")
+    set("PUBLISH_VERSION", com.estiven.buildsrc.Configuration.version)
+}
+
+apply(from = "${rootDir}/scripts/publish-module.gradle")

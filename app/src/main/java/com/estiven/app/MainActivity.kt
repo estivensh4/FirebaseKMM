@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.estiven.app.ui.theme.FirebaseKMMTheme
 import com.estiven.firebase_app.Firebase
+import com.estiven.firebase_app.app
+import com.estiven.firebase_app.options
 import com.estiven.firebase_auth.PhoneAuthResult
 import com.estiven.firebase_auth.auth
 import com.estiven.firebase_firestore.firestore
@@ -100,7 +102,7 @@ class ViewM() : ViewModel() {
     fun createUser(){
         viewModelScope.launch {
             result3 = try {
-                val x = Firebase.auth.createUserWithEmailAndPassword("prueba6@yopmail.com", "12345678")
+                val x = Firebase.auth.createUserWithEmailAndPassword("prueba7@yopmail.com", "12345678")
 
                 x.user
 

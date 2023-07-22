@@ -8,9 +8,9 @@ The following libraries are available for the various Firebase products.
 
 | Product	                                                | Dependency                                                                                                                       | Code coverage                                                                                                                                                            | Android       | iOS           | JS           |
 |---------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|---------------|--------------|
-| [Auth](https://firebase.google.com/docs/auth)           | <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-auth?versionPrefix=0.2">      | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-auth/src/commonMain/kotlin/com/estiven/firebase_auth/FirebaseAuth.kt)                | ✔️In progress | ✔️In progress | ❌Unavailable |
-| [Firestore](https://firebase.google.com/docs/firestore) | <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-firestore?versionPrefix=0.2"> | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-firestore/src/commonMain/kotlin/com/estiven/firebase_firestore/FirebaseFirestore.kt) | ✔️In progress | ✔️In progress | ❌Unavailable |
-| [Storage](https://firebase.google.com/docs/storage)     | <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-storage?versionPrefix=0.3">   | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-storage/src/commonMain/kotlin/com/estiven/firebase_storage/FirebaseStorage.kt)       | ✔️In progress | ✔️In progress | ❌Unavailable |
+| [Auth](https://firebase.google.com/docs/auth)           | <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-auth?versionPrefix=0.4">      | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-auth/src/commonMain/kotlin/com/estiven/firebase_auth/FirebaseAuth.kt)                | ✔️In progress | ✔️In progress | ❌Unavailable |
+| [Firestore](https://firebase.google.com/docs/firestore) | <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-firestore?versionPrefix=0.4"> | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-firestore/src/commonMain/kotlin/com/estiven/firebase_firestore/FirebaseFirestore.kt) | ✔️In progress | ✔️In progress | ❌Unavailable |
+| [Storage](https://firebase.google.com/docs/storage)     | <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-storage?versionPrefix=0.4">   | [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-storage/src/commonMain/kotlin/com/estiven/firebase_storage/FirebaseStorage.kt)       | ✔️In progress | ✔️In progress | ❌Unavailable |
 
 ## Implementation
 
@@ -18,16 +18,16 @@ The following libraries are available for the various Firebase products.
 
 ```gradle
 dependencies {
-    implementation("io.github.estivensh4:firebase-$module:$version")
+    implementation("io.github.estivensh4:firebase-bom:$version")
+    implementation("io.github.estivensh4:firebase-app")
 } 
 ```
 
 2. adds the configuration file
 
-| 	           |                                                                                                                                     |
-|-------------|:------------------------------------------------------------------------------------------------------------------------------------|
-| **Android** | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | 
-| **iOS**     | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png">     |
+| 	   **Android**                                                                                                                     | **iOS**                                                                                                                         |
+|-------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+| <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png"> | 
 
 ## Examples
 ### FirebaseAuth

@@ -1,0 +1,69 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set('javadoc')
+}
+
+artifacts {
+    // archives androidSourcesJar
+    archives javadocJar
+}
+
+
+group = PUBLISH_GROUP_ID
+version = PUBLISH_VERSION
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                //tasks.named("generateMetadataFileForReleasePublication").configure { dependsOn("androidSourcesJar") }
+                groupId PUBLISH_GROUP_ID
+                artifactId PUBLISH_ARTIFACT_ID
+                version PUBLISH_VERSION
+                /* if (project.plugins.findPlugin("com.android.library")) {
+                     from components.release
+                 } else {
+                     from components.java
+                 }*/
+
+                artifact javadocJar
+                pom {
+                    name = PUBLISH_ARTIFACT_ID
+                    description = 'FirebaseKMM is a Firebase Extension that supports cross-platform projects also based on Firebase Kotlin SDK, allowing you to directly from iOS and Android.'
+                    url = 'https://github.com/estivensh4/FirebaseKMM'
+                    inceptionYear = "2023"
+
+                    licenses {
+                        license {
+                            name = 'The Apache Software License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'estivensh4'
+                            name = 'Estiven Sánchez'
+                            email = "estivensh4@gmail.com"
+                            url = "https://github.com/estivensh4"
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:github.com/estivensh4/FirebaseKMM.git'
+                        developerConnection = 'scm:git:ssh://github.com/estivensh4/FirebaseKMM.git'
+                        url = 'https://github.com/estivensh4/FirebaseKMM/tree/main'
+                    }
+                    issueManagement {
+                        name = "GitHub Issues"
+                        url = "https://github.com/estivensh4/FirebaseKMM/issues"
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}

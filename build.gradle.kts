@@ -3,30 +3,21 @@ repositories {
     mavenCentral()
 }
 
-
-
 plugins {
     id("com.android.library").version("8.0.2").apply(false)
     kotlin("multiplatform").version("1.8.21").apply(false)
+    id("org.jetbrains.dokka") version "1.8.20"
     kotlin("plugin.serialization").version("1.8.21")
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
     id("org.sonarqube") version "4.2.1.3168"
     id("base")
     id("com.github.ben-manes.versions") version "0.47.0"
+    id("org.jetbrains.kotlin.jvm") version "1.8.20" apply false
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0-rc-1"
 
-}
-
-tasks {
-    val updateVersions by registering {
-        dependsOn(
-            "firebase-app:updateVersion", "firebase-app:updateDependencyVersion",
-        )
-    }
 }
 
 apply(plugin = "org.jetbrains.kotlinx.kover")
-
-
 
 
 
@@ -48,11 +39,37 @@ buildscript {
 
 }
 
-val targetSdkVersion by extra(32)
-val minSdkVersion by extra(19)
 
 subprojects {
-    if (project.name != "app") {
+    if (project.name != "app" && project.name != "bom" && project.name != "convention-plugins") {
+        afterEvaluate {
+            dependencies {
+                "commonMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+                "androidMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
+                "androidMainImplementation"(platform("com.google.firebase:firebase-bom:32.1.1"))
+                "commonTestImplementation"(kotlin("test-common"))
+                "commonTestImplementation"(kotlin("test-annotations-common"))
+                "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+                "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+                "androidUnitTestImplementation"(kotlin("test-junit"))
+                "androidUnitTestImplementation"("junit:junit:4.13.2")
+                "androidUnitTestImplementation"("androidx.test:core:1.5.0")
+                "androidUnitTestImplementation"("androidx.test.ext:junit:1.1.5")
+                "androidUnitTestImplementation"("androidx.test:runner:1.5.2")
+                "androidUnitTestImplementation"("androidx.test:rules:1.5.0")
+                "androidUnitTestImplementation"("io.mockk:mockk:1.13.5")
+                "androidUnitTestImplementation"("org.robolectric:robolectric:4.9.2")
+                "commonMainImplementation"("com.eygraber:uri-kmp:0.0.3")
+            }
+        }
+    }
+}
+
+//val targetSdkVersion by extra(32)
+//val minSdkVersion by extra(19)
+
+/*subprojects {
+    if (project.name != "app" && project.name != "bom") {
         group = "io.github.estivensh4"
         apply(plugin = "com.adarshr.test-logger")
 
@@ -161,7 +178,7 @@ subprojects {
             }
         }
     }
-}
+}*/
 
 sonarqube {
 
@@ -265,3 +282,14 @@ tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 }
 */
 
+//apply(from = "${rootDir}/scripts/publish-root.gradle")
+/*
+nexusPublishing {
+    repositories {
+        sonatype {
+            this.nexusUrl
+        }
+    }
+}*/
+
+apply(from = "${rootDir}/scripts/publish-root.gradle")

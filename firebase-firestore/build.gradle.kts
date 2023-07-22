@@ -1,5 +1,3 @@
-version = project.property("firebase-firestore.version") as String
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -17,6 +15,7 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishAllLibraryVariants()
     }
     iosX64()
     iosArm64()
@@ -72,9 +71,18 @@ if (project.property("firebase-firestore.skipIosTests") == "true") {
     }
 }
 
+/*
 signing {
     val signingKey: String? by project
     val signingPassword: String? by project
     //useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications)
+}*/
+
+rootProject.ext.apply {
+    set("PUBLISH_GROUP_ID", com.estiven.buildsrc.Configuration.artifactGroup)
+    set("PUBLISH_ARTIFACT_ID", "firebase-firestore")
+    set("PUBLISH_VERSION", com.estiven.buildsrc.Configuration.version)
 }
+
+apply(from = "${rootDir}/scripts/publish-module.gradle")

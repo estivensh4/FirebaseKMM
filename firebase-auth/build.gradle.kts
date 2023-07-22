@@ -1,5 +1,3 @@
-version = project.property("firebase-auth.version").toString()
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -15,6 +13,7 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishAllLibraryVariants()
     }
     iosX64()
     iosArm64()
@@ -85,6 +84,15 @@ android {
     }
 }
 
+/*
 signing {
     sign(publishing.publications)
+}*/
+
+rootProject.ext.apply {
+    set("PUBLISH_GROUP_ID", com.estiven.buildsrc.Configuration.artifactGroup)
+    set("PUBLISH_ARTIFACT_ID", "firebase-auth")
+    set("PUBLISH_VERSION", com.estiven.buildsrc.Configuration.version)
 }
+
+apply(from = "${rootDir}/scripts/publish-module.gradle")

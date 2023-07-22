@@ -51,11 +51,15 @@ dependencies {
 val compose = "1.4.3"
     val version = "1.0.2"
     implementation("com.eygraber:uri-kmp:0.0.3")
-    implementation(project(":firebase-storage"))
+  /*  implementation(project(":firebase-storage"))
     implementation(project(":firebase-firestore"))
     implementation(project(":firebase-auth"))
-    implementation(project(":firebase-storage"))
-    //implementation("io.github.estivensh4:firebase-app:0.0.1")
+    implementation(project(":firebase-storage"))*/
+    implementation("io.github.estivensh4:firebase-bom:0.4.0")
+    implementation("io.github.estivensh4:firebase-app")
+    implementation("io.github.estivensh4:firebase-auth")
+    implementation("io.github.estivensh4:firebase-firestore")
+    implementation("io.github.estivensh4:firebase-storage")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("androidx.activity:activity-compose:1.3.1")

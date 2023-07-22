@@ -1,5 +1,3 @@
-version = project.property("firebase-storage.version") as String
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -16,6 +14,7 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishAllLibraryVariants()
     }
 
     val supportIosTarget = project.property("skipIosTarget") != "true"
@@ -65,8 +64,12 @@ android {
     defaultConfig {
         minSdk = 24
     }
+    publishing {
+        singleVariant("release")
+    }
 }
 
+/*
 signing {
     val signingKey: String? by project
     val signingPassword: String? by project
@@ -78,4 +81,12 @@ if (project.property("firebase-storage.skipIosTests") == "true") {
     tasks.forEach {
         if (it.name.contains("ios", true) && it.name.contains("test", true)) { it.enabled = false }
     }
+}*/
+
+
+rootProject.ext.apply {
+    set("PUBLISH_GROUP_ID", com.estiven.buildsrc.Configuration.artifactGroup)
+    set("PUBLISH_ARTIFACT_ID", "firebase-storage")
+    set("PUBLISH_VERSION", com.estiven.buildsrc.Configuration.version)
 }
+apply(from = "${rootDir}/scripts/publish-module.gradle")
