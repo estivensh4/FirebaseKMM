@@ -44,6 +44,7 @@ buildscript {
         classpath("com.adarshr:gradle-test-logger-plugin:3.2.0")
         classpath("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.2")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.2.1.3168")
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.7")
     }
 
 }
