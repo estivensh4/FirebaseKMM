@@ -1,3 +1,5 @@
+import com.estiven.buildsrc.ProjectConfig
+
 version = project.property("firebase-app.version") as String
 
 plugins {
@@ -31,16 +33,13 @@ kotlin {
         iosSimulatorArm64()
 
         cocoapods {
-            summary = "Some description for the Shared Module"
-            homepage = "Link to the Shared Module homepage"
-            version = "1.0"
-            ios.deploymentTarget = "16.1"
+            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
             framework {
-                baseName = "firebase-app"
+                baseName = ProjectConfig.iOS.appBaseName
             }
             noPodspec()
-            pod("FirebaseCore") {
-                version = "10.11.0"
+            pod(ProjectConfig.iOS.appPod) {
+                version = ProjectConfig.iOS.firebaseVersion
             }
         }
     }
@@ -65,21 +64,13 @@ kotlin {
 }
 
 android {
-    namespace = "com.estiven.firebase_app"
-    compileSdk = 33
+    namespace = ProjectConfig.Android.appModule
+    compileSdk = ProjectConfig.Android.compileSdk
     defaultConfig {
-        minSdk = 24
+        minSdk = ProjectConfig.Android.minSdk
     }
 }
 
 signing {
     sign(publishing.publications)
-}
-
-if (project.property("firebase-app.skipIosTests") == "true") {
-    tasks.forEach {
-        if (it.name.contains("ios", true) && it.name.contains("test", true)) {
-            it.enabled = false
-        }
-    }
 }

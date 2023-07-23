@@ -1,3 +1,6 @@
+import com.estiven.buildsrc.Module
+import com.estiven.buildsrc.ProjectConfig
+
 version = project.property("firebase-storage.version") as String
 
 plugins {
@@ -26,16 +29,13 @@ kotlin {
         iosArm64()
         iosSimulatorArm64()
         cocoapods {
-            summary = "Some description for the Shared Module"
-            homepage = "Link to the Shared Module homepage"
-            version = "1.0"
-            ios.deploymentTarget = "16.1"
+            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
             framework {
-                baseName = "firebase-storage"
+                baseName = ProjectConfig.iOS.storageBaseName
             }
             noPodspec()
-            pod("FirebaseStorage") {
-                version = "10.11.0"
+            pod(ProjectConfig.iOS.storagePod) {
+                version = ProjectConfig.iOS.firebaseVersion
             }
         }
     }
@@ -44,7 +44,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
-                api(project(":firebase-app"))
+                api(project(Module.app))
             }
         }
         val commonTest by getting {
@@ -61,22 +61,13 @@ kotlin {
 }
 
 android {
-    namespace = "com.estiven.firebase_storage"
-    compileSdk = 33
+    namespace = ProjectConfig.Android.storageModule
+    compileSdk = ProjectConfig.Android.compileSdk
     defaultConfig {
-        minSdk = 24
+        minSdk = ProjectConfig.Android.minSdk
     }
 }
 
 signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    //useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications)
-}
-
-if (project.property("firebase-storage.skipIosTests") == "true") {
-    tasks.forEach {
-        if (it.name.contains("ios", true) && it.name.contains("test", true)) { it.enabled = false }
-    }
 }

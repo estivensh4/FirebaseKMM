@@ -1,3 +1,6 @@
+import com.estiven.buildsrc.Module
+import com.estiven.buildsrc.ProjectConfig
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -26,16 +29,13 @@ version = project.property("firebase-messaging.version") as String
         iosSimulatorArm64()
 
         cocoapods {
-            summary = "Some description for the Shared Module"
-            homepage = "Link to the Shared Module homepage"
-            version = "1.0"
-            ios.deploymentTarget = "14.1"
+            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
             framework {
-                baseName = "firebase-messaging"
+                baseName = ProjectConfig.iOS.messagingBaseName
             }
             noPodspec()
-            pod("FirebaseMessaging") {
-                version = "10.11.0"
+            pod(ProjectConfig.iOS.messagingPod) {
+                version = ProjectConfig.iOS.firebaseVersion
             }
         }
     }
@@ -43,7 +43,7 @@ version = project.property("firebase-messaging.version") as String
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":firebase-app"))
+                api(project(Module.app))
             }
         }
         val commonTest by getting {
@@ -60,10 +60,10 @@ version = project.property("firebase-messaging.version") as String
 }
 
 android {
-    namespace = "com.estiven.firebase_messaging"
-    compileSdk = 33
+    namespace = ProjectConfig.Android.messagingModule
+    compileSdk = ProjectConfig.Android.compileSdk
     defaultConfig {
-        minSdk = 24
+        minSdk = ProjectConfig.Android.minSdk
     }
 }
 

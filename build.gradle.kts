@@ -4,7 +4,6 @@ repositories {
 }
 
 
-
 plugins {
     id("com.android.library").version("8.0.2").apply(false)
     kotlin("multiplatform").version("1.8.21").apply(false)
@@ -12,23 +11,9 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
     id("org.sonarqube") version "4.2.1.3168"
     id("base")
-    id("com.github.ben-manes.versions") version "0.47.0"
-    id("com.google.firebase.firebase-perf") version "1.4.2" apply false
-}
-
-tasks {
-    val updateVersions by registering {
-        dependsOn(
-            "firebase-app:updateVersion", "firebase-app:updateDependencyVersion",
-        )
-    }
 }
 
 apply(plugin = "org.jetbrains.kotlinx.kover")
-
-
-
-
 
 buildscript {
     repositories {
@@ -41,10 +26,8 @@ buildscript {
     }
     dependencies {
         classpath("com.google.gms:google-services:4.3.15")
-        classpath("com.adarshr:gradle-test-logger-plugin:3.2.0")
         classpath("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.2")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.2.1.3168")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.7")
     }
 
 }
@@ -55,25 +38,6 @@ val minSdkVersion by extra(19)
 subprojects {
     if (project.name != "app") {
         group = "io.github.estivensh4"
-        apply(plugin = "com.adarshr.test-logger")
-
-        tasks.withType<Test> {
-            testLogging {
-                showExceptions = true
-                exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-                showStandardStreams = true
-                showCauses = true
-                showStackTraces = true
-                events = setOf(
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
-                    org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR
-                )
-            }
-        }
         afterEvaluate {
             dependencies {
                 "commonMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
@@ -122,6 +86,7 @@ subprojects {
                             )
                     }
                 }
+
                 publications.all {
                     this as MavenPublication
                     pom {
@@ -180,31 +145,6 @@ sonarqube {
     }
 }
 
-/*koverReport {
-    defaults {
-        html{
-
-        }
-    }
-}*/
-/*koverMerged {
-    enable()
-    xmlReport {
-        onCheck.set(true)
-    }
-    htmlReport {
-        onCheck.set(true)
-    }
-    verify {
-        onCheck.set(true)
-    }
-}*/
-
-koverMerged {
-    //this.ext.
-
-}
-
 koverReport {
     // filters for all report types of all build variants
     defaults {
@@ -243,26 +183,3 @@ koverReport {
     }*/
 
 }
-
-/*
-tasks.withType<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask> {
-
-    fun isNonStable(version: String): Boolean {
-        val stableKeyword =
-            listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-        val versionMatch = "^[0-9,.v-]+(-r)?$".toRegex().matches(version)
-
-        return (stableKeyword || versionMatch).not()
-    }
-
-    rejectVersionIf {
-        isNonStable(candidate.version)
-    }
-
-    checkForGradleUpdate = true
-    outputFormatter = "plain,html"
-    outputDir = "build/dependency-reports"
-    reportfileName = "dependency-updates"
-}
-*/
-

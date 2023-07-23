@@ -1,3 +1,6 @@
+import com.estiven.buildsrc.Module
+import com.estiven.buildsrc.ProjectConfig
+
 version = project.property("firebase-auth.version").toString()
 
 plugins {
@@ -22,23 +25,20 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "16.1"
+        ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
         framework {
-            baseName = "firebase-auth"
+            baseName = ProjectConfig.iOS.authBaseName
         }
         noPodspec()
-        pod("FirebaseAuth") {
-            version = "10.11.0"
+        pod(ProjectConfig.iOS.authPod) {
+            version = ProjectConfig.iOS.firebaseVersion
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":firebase-app"))
+                api(project(Module.app))
             }
         }
         val commonTest by getting {
@@ -58,31 +58,10 @@ kotlin {
 
 
 android {
-    namespace = "com.estiven.firebase_auth"
-    compileSdk = 33
+    namespace = ProjectConfig.Android.authModule
+    compileSdk = ProjectConfig.Android.compileSdk
     defaultConfig {
-        minSdk = 24
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    testOptions {
-        unitTests.isReturnDefaultValues = true
-    }
-    sourceSets {
-        getByName("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        }
-        getByName("androidTest") {
-            java.srcDir(file("src/androidUnitTest/kotlin"))
-            manifest.srcFile("src/androidUnitTest/AndroidManifest.xml")
-        }
-    }
-    packagingOptions {
-        resources.pickFirsts.add("META-INF/kotlinx-serialization-core.kotlin_module")
-        resources.pickFirsts.add("META-INF/AL2.0")
-        resources.pickFirsts.add("META-INF/LGPL2.1")
-    }
-    lint {
-        abortOnError = false
+        minSdk = ProjectConfig.Android.minSdk
     }
 }
 
