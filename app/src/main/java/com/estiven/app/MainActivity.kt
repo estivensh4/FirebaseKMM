@@ -26,6 +26,7 @@ import com.estiven.firebase_app.Firebase
 import com.estiven.firebase_auth.PhoneAuthResult
 import com.estiven.firebase_auth.auth
 import com.estiven.firebase_config.config
+import com.estiven.firebase_crashlytics.crashlytics
 import com.estiven.firebase_firestore.firestore
 import com.estiven.firebase_storage.File
 import com.estiven.firebase_storage.UploadResult
@@ -42,6 +43,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.Serializable
+import java.lang.RuntimeException
 
 class MainActivity : ComponentActivity() {
     private val viewM: ViewM = ViewM()
@@ -60,7 +62,8 @@ class MainActivity : ComponentActivity() {
                     Column {
                         Greeting("Android ${viewM.result3}\n")
                         Button(onClick = {
-                            viewM.sendVerifyPhoneNumber(activity)
+viewM.generateLog()
+                            //viewM.sendVerifyPhoneNumber(activity)
                         }) {
                             Text("Hola")
                         }
@@ -169,6 +172,17 @@ class ViewM() : ViewModel() {
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun generateLog(){
+        try {
+            val crash = Firebase.crashlytics
+            crash.log("errormessageprueab")
+            crash.setUserId("123456")
+            throw RuntimeException("prueba")
+        } catch (e: Exception){
+            Firebase.crashlytics.recordException(e)
+        }
     }
 
     fun testConfig() {
