@@ -3,8 +3,6 @@ plugins {
     id("com.google.gms.google-services")
     id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("android")
-    id("com.google.firebase.crashlytics")
-    id("com.google.firebase.firebase-perf")
 }
 
 android {

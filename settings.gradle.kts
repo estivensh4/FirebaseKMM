@@ -14,13 +14,13 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FirebaseKMM"
-include(":firebase-firestore")
-include(":firebase-app")
-include(":firebase-storage")
 include(":app")
+include(":firebase-app")
 include(":firebase-auth")
 include(":firebase-config")
 include(":firebase-crashlytics")
+include(":firebase-firestore")
 include(":firebase-installations")
-include(":firebase-performance")
 include(":firebase-messaging")
+include(":firebase-performance")
+include(":firebase-storage")

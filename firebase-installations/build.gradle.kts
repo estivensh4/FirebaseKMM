@@ -1,3 +1,6 @@
+import com.estiven.buildsrc.Module
+import com.estiven.buildsrc.ProjectConfig
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -27,23 +30,20 @@ kotlin {
         iosSimulatorArm64()
 
         cocoapods {
-            summary = "Some description for the Shared Module"
-            homepage = "Link to the Shared Module homepage"
-            version = "1.0"
-            ios.deploymentTarget = "14.1"
+            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
             framework {
-                baseName = "firebase-installations"
+                baseName = ProjectConfig.iOS.installationsBaseName
             }
             noPodspec()
-            pod("FirebaseInstallations") {
-                version = "10.11.0"
+            pod(ProjectConfig.iOS.installationsPod) {
+                version =ProjectConfig.iOS.firebaseVersion
             }
         }
 
         sourceSets {
             val commonMain by getting {
                 dependencies {
-                    implementation(project(":firebase-app"))
+                    api(project(Module.app))
                 }
             }
             val commonTest by getting {
@@ -61,10 +61,10 @@ kotlin {
 }
 
 android {
-    namespace = "com.estiven.firebase_installations"
-    compileSdk = 33
+    namespace = ProjectConfig.Android.installationsModule
+    compileSdk = ProjectConfig.Android.compileSdk
     defaultConfig {
-        minSdk = 24
+        minSdk = ProjectConfig.Android.minSdk
     }
 }
 
