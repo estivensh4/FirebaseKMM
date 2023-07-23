@@ -1,20 +1,15 @@
-version = project.property("firebase-app.version") as String
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
-    id("org.jetbrains.kotlinx.kover")
 }
 
-repositories {
-    google()
-    mavenCentral()
-}
+version = project.property("firebase-config.version") as String
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     targetHierarchy.default()
+
     android {
         compilations.all {
             kotlinOptions {
@@ -23,8 +18,8 @@ kotlin {
         }
         publishAllLibraryVariants()
     }
-
     val supportIosTarget = project.property("skipIosTarget") != "true"
+
     if (supportIosTarget) {
         iosX64()
         iosArm64()
@@ -34,12 +29,12 @@ kotlin {
             summary = "Some description for the Shared Module"
             homepage = "Link to the Shared Module homepage"
             version = "1.0"
-            ios.deploymentTarget = "16.1"
+            ios.deploymentTarget = "14.1"
             framework {
-                baseName = "firebase-app"
+                baseName = "firebase-config"
             }
             noPodspec()
-            pod("FirebaseCore") {
+            pod("FirebaseRemoteConfig") {
                 version = "10.11.0"
             }
         }
@@ -48,7 +43,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
+                api(project(":firebase-app"))
             }
         }
         val commonTest by getting {
@@ -58,14 +53,14 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-common")
+                api("com.google.firebase:firebase-config")
             }
         }
     }
 }
 
 android {
-    namespace = "com.estiven.firebase_app"
+    namespace = "com.estiven.firebase_config"
     compileSdk = 33
     defaultConfig {
         minSdk = 24
@@ -74,12 +69,4 @@ android {
 
 signing {
     sign(publishing.publications)
-}
-
-if (project.property("firebase-app.skipIosTests") == "true") {
-    tasks.forEach {
-        if (it.name.contains("ios", true) && it.name.contains("test", true)) {
-            it.enabled = false
-        }
-    }
 }

@@ -16,6 +16,7 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishAllLibraryVariants()
     }
 
     val supportIosTarget = project.property("skipIosTarget") != "true"

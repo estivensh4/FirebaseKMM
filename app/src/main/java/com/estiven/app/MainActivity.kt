@@ -11,7 +11,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,14 +25,22 @@ import com.estiven.app.ui.theme.FirebaseKMMTheme
 import com.estiven.firebase_app.Firebase
 import com.estiven.firebase_auth.PhoneAuthResult
 import com.estiven.firebase_auth.auth
+import com.estiven.firebase_config.config
 import com.estiven.firebase_firestore.firestore
 import com.estiven.firebase_storage.File
 import com.estiven.firebase_storage.UploadResult
 import com.estiven.firebase_storage.storage
 import com.google.firebase.Timestamp
+import com.google.firebase.remoteconfig.ConfigUpdate
+import com.google.firebase.remoteconfig.ConfigUpdateListener
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
@@ -79,8 +91,9 @@ class ViewM() : ViewModel() {
 
 
     init {
-        x()
-        createUser()
+        //x()
+        //createUser()
+        testConfig()
     }
 
     fun x() {
@@ -146,6 +159,7 @@ class ViewM() : ViewModel() {
                 is UploadResult.Progress -> {
 
                 }
+
                 is UploadResult.Success -> {
                     it.storage.downloadUrl()
                 }
@@ -155,6 +169,37 @@ class ViewM() : ViewModel() {
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun testConfig() {
+
+       val config = Firebase.config
+
+        viewModelScope.launch {
+            config.settings(
+                minimumFetchIntervalInSeconds = 1000,
+                fetchTimeoutInSeconds = 60
+            )
+            config.fetchAndActivate()
+        }
+
+        val x = config.getValue("prueba2")
+        val y = com.google.firebase.ktx.Firebase.remoteConfig
+/*        y.addOnConfigUpdateListener(object : ConfigUpdateListener{
+            override fun onUpdate(configUpdate: ConfigUpdate) {
+                result3 = configUpdate.updatedKeys.toString()
+            }
+
+            override fun onError(error: FirebaseRemoteConfigException) {
+                result3 = error.toString()
+            }
+
+        })*/
+        val o = config.all
+        config.configUpdateListener.onEach {
+            result3 = it.toString()
+        }.launchIn(viewModelScope)
+
     }
 }
 
