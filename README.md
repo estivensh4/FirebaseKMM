@@ -25,10 +25,9 @@ dependencies {
 
 2. adds the configuration file
 
-| 	           |                                                                                                                                     |
-|-------------|:------------------------------------------------------------------------------------------------------------------------------------|
-| **Android** | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | 
-| **iOS**     | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png">     |
+| 	 **Android**                                                                                                                       | **iOS**                                                                                                                         |
+|-------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------|
+| <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png"> | 
 
 ## Examples
 ### FirebaseAuth
