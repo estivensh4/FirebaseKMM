@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     kotlin("android")
     id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
 }
 
 android {
@@ -58,6 +59,7 @@ val compose = "1.4.3"
     implementation(project(":firebase-storage"))
     implementation(project(":firebase-config"))
     implementation(project(":firebase-crashlytics"))
+    implementation(project(":firebase-performance"))
     //implementation("io.github.estivensh4:firebase-app:0.0.1")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
@@ -74,6 +76,7 @@ val compose = "1.4.3"
     implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-config-ktx")
+    //implementation("com.google.firebase:firebase-perf-ktx")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("io.getstream:stream-webrtc-android-compose:$version")
 }

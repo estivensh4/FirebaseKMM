@@ -4,7 +4,7 @@ plugins {
     id("com.android.library")
 }
 
-version = project.property("firebase-installations.version") as String
+version = project.property("firebase-performance.version") as String
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
@@ -32,36 +32,36 @@ kotlin {
             version = "1.0"
             ios.deploymentTarget = "14.1"
             framework {
-                baseName = "firebase-installations"
+                baseName = "firebase-performance"
             }
             noPodspec()
-            pod("FirebaseInstallations") {
+            pod("FirebasePerformance") {
                 version = "10.11.0"
             }
         }
+    }
 
-        sourceSets {
-            val commonMain by getting {
-                dependencies {
-                    implementation(project(":firebase-app"))
-                }
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":firebase-app"))
             }
-            val commonTest by getting {
-                dependencies {
-                    implementation(kotlin("test"))
-                }
+        }
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
             }
-            val androidMain by getting {
-                dependencies {
-                    api("com.google.firebase:firebase-installations")
-                }
+        }
+        val androidMain by getting {
+            dependencies {
+                api("com.google.firebase:firebase-perf")
             }
         }
     }
 }
 
 android {
-    namespace = "com.estiven.firebase_installations"
+    namespace = "com.estiven.firebase_performance"
     compileSdk = 33
     defaultConfig {
         minSdk = 24

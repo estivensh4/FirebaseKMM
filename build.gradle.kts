@@ -13,7 +13,7 @@ plugins {
     id("org.sonarqube") version "4.2.1.3168"
     id("base")
     id("com.github.ben-manes.versions") version "0.47.0"
-
+    id("com.google.firebase.firebase-perf") version "1.4.2" apply false
 }
 
 tasks {
