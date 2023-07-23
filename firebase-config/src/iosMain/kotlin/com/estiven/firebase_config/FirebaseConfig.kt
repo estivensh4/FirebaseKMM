@@ -94,6 +94,7 @@ actual class FirebaseConfig(private val iOS: FIRRemoteConfig) {
      * @return
      */
     actual fun getValue(key: String) = FirebaseRemoteConfigValue(iOS.configValueForKey(key))
+    @Suppress("UNCHECKED_CAST")
     actual val configUpdateListener
         get() = callbackFlow {
             val listener = iOS.addOnConfigUpdateListener { firRemoteConfigUpdate, nsError ->

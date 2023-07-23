@@ -68,6 +68,7 @@ actual class FirebaseCrashlytics(private val iOS: FIRCrashlytics) {
      *
      * @param customKeys Custom keys
      */
+    @Suppress("UNCHECKED_CAST")
     actual fun setCustomKeys(customKeys: Map<String, Any>) {
         iOS.setCustomKeysAndValues(customKeys as Map<Any?, *>)
     }

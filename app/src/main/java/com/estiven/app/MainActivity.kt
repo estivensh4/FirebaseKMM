@@ -28,22 +28,19 @@ import com.estiven.firebase_auth.auth
 import com.estiven.firebase_config.config
 import com.estiven.firebase_crashlytics.crashlytics
 import com.estiven.firebase_firestore.firestore
+import com.estiven.firebase_performance.performance
 import com.estiven.firebase_storage.File
 import com.estiven.firebase_storage.UploadResult
 import com.estiven.firebase_storage.storage
 import com.google.firebase.Timestamp
-import com.google.firebase.remoteconfig.ConfigUpdate
-import com.google.firebase.remoteconfig.ConfigUpdateListener
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
+import com.google.firebase.perf.metrics.AddTrace
 import com.google.firebase.remoteconfig.ktx.remoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.serialization.Serializable
-import java.lang.RuntimeException
+import kotlinx.coroutines.withContext
+
 
 class MainActivity : ComponentActivity() {
     private val viewM: ViewM = ViewM()
@@ -59,15 +56,21 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val context = LocalContext.current
                     val activity = context as Activity
+                    val perf = Firebase.performance
+                    val trace =perf.newTrace("test_trace")
+                    trace?.start()
+
                     Column {
                         Greeting("Android ${viewM.result3}\n")
                         Button(onClick = {
-viewM.generateLog()
+                            viewM.generateLog()
                             //viewM.sendVerifyPhoneNumber(activity)
                         }) {
                             Text("Hola")
                         }
                     }
+                    trace?.stop()
+
                     /* LazyColumn{
                          items(viewM.result){ item ->
                              Greeting("Android ${item.fullName}\n")
@@ -96,7 +99,8 @@ class ViewM() : ViewModel() {
     init {
         //x()
         //createUser()
-        testConfig()
+        //testConfig()
+        testPerformance()
     }
 
     fun x() {
@@ -215,6 +219,12 @@ class ViewM() : ViewModel() {
         }.launchIn(viewModelScope)
 
     }
+
+    fun testPerformance(){
+
+        val x = Firebase.performance
+        x.newTrace("prueba1")?.putMetric("nuevo", 4L)
+    }
 }
 
 data class Chats(
@@ -223,24 +233,6 @@ data class Chats(
     val whoIsWriting: String = "",
     val notificationId: String = ""
 )
-
-@Serializable
-object StatusMessage {
-    const val SENT = 1
-    const val DELIVERED = 2
-    const val RECEIVED = 3
-}
-
-
-@Serializable
-object TypeMessage {
-    const val TEXT = 1
-    const val GIF = 2
-    const val PHOTO = 3
-    const val VIDEO = 4
-    const val AUDIO = 5
-    const val PDF = 6
-}
 
 data class User(
     val id: String = "",
