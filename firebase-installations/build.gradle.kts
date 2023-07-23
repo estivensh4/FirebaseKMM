@@ -14,30 +14,45 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishAllLibraryVariants()
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
 
-    cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        version = "1.0"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "firebase-installations"
-        }
-    }
-    
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                //put your multiplatform dependencies here
+    val supportIosTarget = project.property("skipIosTarget") != "true"
+
+    if (supportIosTarget) {
+        iosX64()
+        iosArm64()
+        iosSimulatorArm64()
+
+        cocoapods {
+            summary = "Some description for the Shared Module"
+            homepage = "Link to the Shared Module homepage"
+            version = "1.0"
+            ios.deploymentTarget = "14.1"
+            framework {
+                baseName = "firebase-installations"
+            }
+            noPodspec()
+            pod("FirebaseInstallations") {
+                version = "10.11.0"
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
+
+        sourceSets {
+            val commonMain by getting {
+                dependencies {
+                    implementation(project(":firebase-app"))
+                }
+            }
+            val commonTest by getting {
+                dependencies {
+                    implementation(kotlin("test"))
+                }
+            }
+            val androidMain by getting {
+                dependencies {
+                    api("com.google.firebase:firebase-installations")
+                }
             }
         }
     }
@@ -49,4 +64,8 @@ android {
     defaultConfig {
         minSdk = 24
     }
+}
+
+signing {
+    sign(publishing.publications)
 }
