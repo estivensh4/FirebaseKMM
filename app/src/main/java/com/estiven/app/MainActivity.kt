@@ -1,6 +1,7 @@
 package com.estiven.app
 
 import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,18 +29,18 @@ import com.estiven.firebase_auth.auth
 import com.estiven.firebase_config.config
 import com.estiven.firebase_crashlytics.crashlytics
 import com.estiven.firebase_firestore.firestore
+import com.estiven.firebase_messaging.FirebaseService
+import com.estiven.firebase_messaging.FirebaseServiceOptions
+import com.estiven.firebase_messaging.messaging
 import com.estiven.firebase_performance.performance
 import com.estiven.firebase_storage.File
 import com.estiven.firebase_storage.UploadResult
 import com.estiven.firebase_storage.storage
 import com.google.firebase.Timestamp
-import com.google.firebase.perf.metrics.AddTrace
 import com.google.firebase.remoteconfig.ktx.remoteConfig
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class MainActivity : ComponentActivity() {
@@ -101,6 +102,7 @@ class ViewM() : ViewModel() {
         //createUser()
         //testConfig()
         testPerformance()
+        testMessaging()
     }
 
     fun x() {
@@ -224,6 +226,13 @@ class ViewM() : ViewModel() {
 
         val x = Firebase.performance
         x.newTrace("prueba1")?.putMetric("nuevo", 4L)
+    }
+
+    fun testMessaging(){
+        val y = Firebase.messaging
+        viewModelScope.launch {
+            val o = y.getToken()
+        }
     }
 }
 
