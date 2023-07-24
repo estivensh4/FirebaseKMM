@@ -1,4 +1,4 @@
-import com.estiven.buildsrc.ProjectConfig
+import com.estivensh4.buildsrc.ProjectConfig
 
 version = project.property("firebase-app.version") as String
 
@@ -26,28 +26,25 @@ kotlin {
         publishAllLibraryVariants()
     }
 
-    val supportIosTarget = project.property("skipIosTarget") != "true"
-    if (supportIosTarget) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-        cocoapods {
-            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
-            framework {
-                baseName = ProjectConfig.iOS.appBaseName
-            }
-            noPodspec()
-            pod(ProjectConfig.iOS.appPod) {
-                version = ProjectConfig.iOS.firebaseVersion
-            }
+    cocoapods {
+        ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
+        framework {
+            baseName = ProjectConfig.iOS.appBaseName
+        }
+        noPodspec()
+        pod(ProjectConfig.iOS.appPod) {
+            version = ProjectConfig.iOS.firebaseVersion
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
+                api(libs.kotlin.serialization)
             }
         }
         val commonTest by getting {
@@ -57,7 +54,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-common")
+                api(libs.firebase.common)
             }
         }
     }

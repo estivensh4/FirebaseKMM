@@ -1,8 +1,9 @@
+import com.estivensh4.buildsrc.ProjectConfig
+
 repositories {
     google()
     mavenCentral()
 }
-
 
 plugins {
     id("com.android.library").version("8.0.2").apply(false)
@@ -28,6 +29,9 @@ buildscript {
         classpath("com.google.gms:google-services:4.3.15")
         classpath("org.jetbrains.kotlinx:kover-gradle-plugin:0.7.2")
         classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:4.2.1.3168")
+        /*classpath(libs.google.services.plugin)
+        classpath(libs.kover.plugin)
+        classpath(libs.sonar.plugin)*/
     }
 
 }
@@ -37,35 +41,36 @@ val minSdkVersion by extra(19)
 
 subprojects {
     if (project.name != "app") {
-        group = "io.github.estivensh4"
-        afterEvaluate {
-            dependencies {
-                "commonMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-                "androidMainImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
-                "androidMainImplementation"(platform("com.google.firebase:firebase-bom:32.1.1"))
-                "commonTestImplementation"(kotlin("test-common"))
-                "commonTestImplementation"(kotlin("test-annotations-common"))
-                "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-                "commonTestImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-                "androidUnitTestImplementation"(kotlin("test-junit"))
-                "androidUnitTestImplementation"("junit:junit:4.13.2")
-                "androidUnitTestImplementation"("androidx.test:core:1.5.0")
-                "androidUnitTestImplementation"("androidx.test.ext:junit:1.1.5")
-                "androidUnitTestImplementation"("androidx.test:runner:1.5.2")
-                "androidUnitTestImplementation"("androidx.test:rules:1.5.0")
-                "androidUnitTestImplementation"("io.mockk:mockk:1.13.5")
-                "androidUnitTestImplementation"("org.robolectric:robolectric:4.9.2")
-                "commonMainImplementation"("com.eygraber:uri-kmp:0.0.3")
-            }
-        }
+
+        group = ProjectConfig.groupId
+
+        apply(plugin = "maven-publish")
+        apply(plugin = "signing")
 
         repositories {
             mavenLocal()
             google()
             mavenCentral()
         }
-        apply(plugin = "maven-publish")
-        apply(plugin = "signing")
+
+        afterEvaluate {
+            dependencies {
+                "commonMainImplementation"(libs.kotlin.coroutines.core)
+                "commonMainImplementation"(libs.eygraber.uri)
+                "androidMainImplementation"(libs.kotlin.coroutines.playservices)
+                "androidMainImplementation"(platform(libs.firebase.bom))
+                "commonTestImplementation"(libs.kotlin.coroutines.core)
+                "commonTestImplementation"(libs.kotlin.coroutines.test)
+                "commonTestImplementation"(kotlin("test-common"))
+                "commonTestImplementation"(kotlin("test-annotations-common"))
+                "androidUnitTestImplementation"(kotlin("test-junit"))
+                "androidUnitTestImplementation"(libs.junit4)
+                "androidUnitTestImplementation"(libs.androidx.test.core)
+                "androidUnitTestImplementation"(libs.androidx.test.ext)
+                "androidUnitTestImplementation"(libs.androidx.test.runner)
+                "androidUnitTestImplementation"(libs.roboelectric)
+            }
+        }
 
         tasks.withType<Sign>().configureEach {
             onlyIf { !project.gradle.startParameter.taskNames.contains("publishToMavenLocal") }
@@ -74,16 +79,10 @@ subprojects {
         configure<PublishingExtension> {
             repositories {
                 maven {
-                    url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                    url = uri(getLocalProperty("ossrhUrl").toString())
                     credentials {
-                        username =
-                            project.findProperty("sonatypeUsername") as String? ?: System.getenv(
-                                "sonatypeUsername"
-                            )
-                        password =
-                            project.findProperty("sonatypePassword") as String? ?: System.getenv(
-                                "sonatypePassword"
-                            )
+                        username = getLocalProperty("ossrhUsername").toString()
+                        password = getLocalProperty("ossrhPassword").toString()
                     }
                 }
 
@@ -119,7 +118,6 @@ subprojects {
                                 name.set("The Apache Software License, Version 2.0")
                                 url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
                                 distribution.set("repo")
-                                comments.set("A business-friendly OSS license")
                             }
                         }
                     }
@@ -148,7 +146,15 @@ sonarqube {
 koverReport {
     // filters for all report types of all build variants
     defaults {
-       // mergeWith("firebase-firestore")
+        /*mergeWith("firebase-app")
+        mergeWith("firebase-auth")
+        mergeWith("firebase-config")
+        mergeWith("firebase-crashlytics")
+        mergeWith("firebase-firestore")
+        mergeWith("firebase-installations")
+        mergeWith("firebase-messaging")
+        mergeWith("firebase-performance")
+        mergeWith("firebase-storage")*/
     }
     filters {
         excludes {
@@ -163,23 +169,36 @@ koverReport {
         }
     }
 
-/*    androidReports("release") {
-        // filters for all report types only of 'release' build type
-        filters {
-            excludes {
-                classes(
-                    "*Fragment",
-                    "*Fragment\$*",
-                    "*Activity",
-                    "*Activity\$*",
-                    "*.databinding.*",
-                    "*.BuildConfig",
+    /*    androidReports("release") {
+            // filters for all report types only of 'release' build type
+            filters {
+                excludes {
+                    classes(
+                        "*Fragment",
+                        "*Fragment\$*",
+                        "*Activity",
+                        "*Activity\$*",
+                        "*.databinding.*",
+                        "*.BuildConfig",
 
-                    // excludes debug classes
-                    "*.DebugUtil"
-                )
+                        // excludes debug classes
+                        "*.DebugUtil"
+                    )
+                }
             }
-        }
-    }*/
+        }*/
 
+}
+
+fun getLocalProperty(key: String, file: String = "local.properties"): Any {
+    val properties = java.util.Properties()
+    val localProperties = File(file)
+    if (localProperties.isFile) {
+        java.io.InputStreamReader(java.io.FileInputStream(localProperties), Charsets.UTF_8)
+            .use { reader ->
+                properties.load(reader)
+            }
+    } else error("File from not found")
+
+    return properties.getProperty(key)
 }

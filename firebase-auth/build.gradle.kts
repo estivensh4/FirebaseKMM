@@ -1,5 +1,5 @@
-import com.estiven.buildsrc.Module
-import com.estiven.buildsrc.ProjectConfig
+import com.estivensh4.buildsrc.Module
+import com.estivensh4.buildsrc.ProjectConfig
 
 version = project.property("firebase-auth.version").toString()
 
@@ -7,6 +7,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -44,13 +45,11 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(kotlin("test-common"))
-                implementation("junit:junit:4.13.2")
             }
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-auth")
+                api(libs.firebase.auth)
             }
         }
     }

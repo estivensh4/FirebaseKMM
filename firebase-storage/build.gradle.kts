@@ -1,5 +1,5 @@
-import com.estiven.buildsrc.Module
-import com.estiven.buildsrc.ProjectConfig
+import com.estivensh4.buildsrc.Module
+import com.estivensh4.buildsrc.ProjectConfig
 
 version = project.property("firebase-storage.version") as String
 
@@ -13,6 +13,7 @@ plugins {
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     targetHierarchy.default()
+
     android {
         compilations.all {
             kotlinOptions {
@@ -22,21 +23,18 @@ kotlin {
         publishAllLibraryVariants()
     }
 
-    val supportIosTarget = project.property("skipIosTarget") != "true"
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    if (supportIosTarget) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-        cocoapods {
-            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
-            framework {
-                baseName = ProjectConfig.iOS.storageBaseName
-            }
-            noPodspec()
-            pod(ProjectConfig.iOS.storagePod) {
-                version = ProjectConfig.iOS.firebaseVersion
-            }
+    cocoapods {
+        ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
+        framework {
+            baseName = ProjectConfig.iOS.storageBaseName
+        }
+        noPodspec()
+        pod(ProjectConfig.iOS.storagePod) {
+            version = ProjectConfig.iOS.firebaseVersion
         }
     }
 
@@ -54,7 +52,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-storage")
+                api(libs.firebase.storage)
             }
         }
     }
