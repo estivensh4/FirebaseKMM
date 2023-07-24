@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: set up JDK 11
         uses: actions/setup-java@v3
+        run: echo ossrhUsername="ossrhUsername" > ./local.properties
         with:
           java-version: '17'
           distribution: 'zulu'
