@@ -22,7 +22,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FirebaseKMM"
-include(":app")
 include(":firebase-app")
 include(":firebase-auth")
 include(":firebase-config")
