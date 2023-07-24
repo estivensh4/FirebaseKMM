@@ -24,6 +24,10 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
           cache: gradle
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ secrets.OSSH_USERNAME }}
+        run: echo "$JOB_CONTEXT"
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Publish All
