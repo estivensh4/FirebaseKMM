@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * Created by estiven on 24/7/23 00:29
+  ~  * Copyright (c) 2023 . All rights reserved.
+  ~  * Last modified 22/7/23 14:52
+  ~  */
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
