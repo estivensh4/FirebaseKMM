@@ -33,7 +33,7 @@ val commonMain by getting {
 
 |                                                             	 **Android**                                                              |                                                              **iOS**                                                               |
 |:--------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
-| <img alt="Maven Central" src="https://github.com/estivensh4sh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | <img alt="Maven Central" src="https://github.com/estivensh4sh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png"> | 
+| <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png"> | 
 
 ## Examples
 ### FirebaseAuth
@@ -48,9 +48,9 @@ This library was mostly inspired by [Firebase Kotlin SDK](https://github.com/Git
 
 ## Find this repository useful? :heart:
 
-Support it by joining __[estivensh4](https://github.com/estivensh4sh4/FirebaseKMM)__ for this
+Support it by joining __[estivensh4](https://github.com/estivensh4/FirebaseKMM)__ for this
 repository. :star: <br>
-Also __[follow](https://github.com/estivensh4sh4)__ me for my next creations! 🤩
+Also __[follow](https://github.com/estivensh4)__ me for my next creations! 🤩
 
 ## License
 

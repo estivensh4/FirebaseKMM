@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:262199812612:android:c951ea2618e1382c960b51",
+        "mobilesdk_app_id": "1:262199812612:android:6b28b3237c198a4a960b51",
         "android_client_info": {
-          "package_name": "com.estiven.app"
+          "package_name": "com.estiven.wpp.android"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "262199812612-kfaqa6g8oqnueel51vnsae00h5l113ni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.estiven.wpp.android",
+            "certificate_hash": "4048df9fa4982e6e5b223ff28ef8e4f7fcdfac55"
+          }
+        },
         {
           "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
           "client_type": 3
@@ -44,20 +52,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:262199812612:android:6b28b3237c198a4a960b51",
+        "mobilesdk_app_id": "1:262199812612:android:e490c7f8617a35a4960b51",
         "android_client_info": {
-          "package_name": "com.estiven.wpp.android"
+          "package_name": "com.estivensh4.app"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "262199812612-kfaqa6g8oqnueel51vnsae00h5l113ni.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.estiven.wpp.android",
-            "certificate_hash": "4048df9fa4982e6e5b223ff28ef8e4f7fcdfac55"
-          }
-        },
         {
           "client_id": "262199812612-joqe4p50omuhap8dhss7ltv99g4bjuml.apps.googleusercontent.com",
           "client_type": 3

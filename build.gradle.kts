@@ -87,9 +87,7 @@ subprojects {
         configure<PublishingExtension> {
             repositories {
                 maven {
-                    url = uri(project.findProperty("ossrhUrl") as String? ?: System.getenv(
-                        "ossrhUrl"
-                    ))
+                    url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
                     credentials {
                         username = project.findProperty("ossrhUsername") as String? ?: System.getenv(
                             "ossrhUsername"

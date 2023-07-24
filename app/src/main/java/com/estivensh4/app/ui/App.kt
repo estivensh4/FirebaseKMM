@@ -11,7 +11,7 @@ package com.estivensh4.app.ui
 import android.app.Application
 import android.content.Intent
 import com.estivensh4.app.MainActivity
-import com.estiven.app.R
+import com.estivensh4.app.R
 import com.estivensh4.firebase_messaging.FirebaseService
 import com.estivensh4.firebase_messaging.FirebaseServiceOptions
 

@@ -14,11 +14,11 @@ plugins {
 }
 
 android {
-    namespace = "com.estiven.app"
+    namespace = "com.estivensh4.app"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.estiven.app"
+        applicationId = "com.estivensh4.app"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
