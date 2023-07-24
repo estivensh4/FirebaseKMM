@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by estiven on 24/7/23 00:29
+ *  * Copyright (c) 2023 . All rights reserved.
+ *  * Last modified 24/7/23 00:05
+ *
+ */
+
 import com.estivensh4.buildsrc.ProjectConfig
 
 repositories {
