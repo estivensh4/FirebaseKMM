@@ -1,10 +1,11 @@
-import com.estiven.buildsrc.Module
-import com.estiven.buildsrc.ProjectConfig
+import com.estivensh4.buildsrc.Module
+import com.estivensh4.buildsrc.ProjectConfig
 
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 version = project.property("firebase-messaging.version") as String
@@ -21,22 +22,18 @@ version = project.property("firebase-messaging.version") as String
         publishAllLibraryVariants()
     }
 
-    val supportIosTarget = project.property("skipIosTarget") != "true"
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    if (supportIosTarget) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-
-        cocoapods {
-            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
-            framework {
-                baseName = ProjectConfig.iOS.messagingBaseName
-            }
-            noPodspec()
-            pod(ProjectConfig.iOS.messagingPod) {
-                version = ProjectConfig.iOS.firebaseVersion
-            }
+    cocoapods {
+        ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
+        framework {
+            baseName = ProjectConfig.iOS.messagingBaseName
+        }
+        noPodspec()
+        pod(ProjectConfig.iOS.messagingPod) {
+            version = ProjectConfig.iOS.firebaseVersion
         }
     }
 
@@ -53,7 +50,7 @@ version = project.property("firebase-messaging.version") as String
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-messaging")
+                api(libs.firebase.messaging)
             }
         }
     }

@@ -1,10 +1,11 @@
-import com.estiven.buildsrc.Module
-import com.estiven.buildsrc.ProjectConfig
+import com.estivensh4.buildsrc.Module
+import com.estivensh4.buildsrc.ProjectConfig
 
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("org.jetbrains.kotlinx.kover")
 }
 
 version = project.property("firebase-performance.version") as String
@@ -22,22 +23,18 @@ kotlin {
         publishAllLibraryVariants()
     }
 
-    val supportIosTarget = project.property("skipIosTarget") != "true"
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    if (supportIosTarget) {
-        iosX64()
-        iosArm64()
-        iosSimulatorArm64()
-
-        cocoapods {
-            ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
-            framework {
-                baseName = ProjectConfig.iOS.performanceBaseName
-            }
-            noPodspec()
-            pod(ProjectConfig.iOS.performancePod) {
-                version = ProjectConfig.iOS.firebaseVersion
-            }
+    cocoapods {
+        ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
+        framework {
+            baseName = ProjectConfig.iOS.performanceBaseName
+        }
+        noPodspec()
+        pod(ProjectConfig.iOS.performancePod) {
+            version = ProjectConfig.iOS.firebaseVersion
         }
     }
 
@@ -54,7 +51,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                api("com.google.firebase:firebase-perf")
+                api(libs.firebase.performance)
             }
         }
     }

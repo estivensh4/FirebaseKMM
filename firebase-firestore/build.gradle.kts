@@ -1,5 +1,5 @@
-import com.estiven.buildsrc.Module
-import com.estiven.buildsrc.ProjectConfig
+import com.estivensh4.buildsrc.Module
+import com.estivensh4.buildsrc.ProjectConfig
 
 version = project.property("firebase-firestore.version") as String
 
@@ -12,8 +12,8 @@ plugins {
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    val supportIosTarget = project.property("skipIosTarget") != "true"
     targetHierarchy.default()
+
     android {
         compilations.all {
             kotlinOptions {
@@ -22,9 +22,11 @@ kotlin {
         }
         publishAllLibraryVariants()
     }
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+
     cocoapods {
         ios.deploymentTarget = ProjectConfig.iOS.deploymentTarget
         framework {
@@ -45,14 +47,12 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation("com.google.code.gson:gson:2.10.1")
-                api("com.google.firebase:firebase-firestore")
+                api(libs.firebase.firestore)
             }
         }
     }
