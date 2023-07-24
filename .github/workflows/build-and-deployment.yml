@@ -8,7 +8,7 @@ env:
   ossrhUrl: ${{ secrets.OSSH_URL }}
   ossrhUsername: ${{ secrets.OSSH_USERNAME }}
   ossrhPassword: ${{ secrets.OSSH_PASSWORD }}
-  ORG_GRADLE_PROJECT_signingKeyId: ${{ secrets.SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
   ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASS }}
 
 jobs:
