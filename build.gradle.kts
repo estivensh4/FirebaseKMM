@@ -87,10 +87,16 @@ subprojects {
         configure<PublishingExtension> {
             repositories {
                 maven {
-                    url = uri(getLocalProperty("ossrhUrl").toString())
+                    url = uri(project.findProperty("ossrhUrl") as String? ?: System.getenv(
+                        "ossrhUrl"
+                    ))
                     credentials {
-                        username = getLocalProperty("ossrhUsername").toString()
-                        password = getLocalProperty("ossrhPassword").toString()
+                        username = project.findProperty("ossrhUsername") as String? ?: System.getenv(
+                            "ossrhUsername"
+                        )
+                        password = project.findProperty("ossrhPassword") as String? ?: System.getenv(
+                            "ossrhPassword"
+                        )
                     }
                 }
 
@@ -196,17 +202,4 @@ koverReport {
             }
         }*/
 
-}
-
-fun getLocalProperty(key: String, file: String = "local.properties"): Any {
-    val properties = java.util.Properties()
-    val localProperties = File(file)
-    if (localProperties.isFile) {
-        java.io.InputStreamReader(java.io.FileInputStream(localProperties), Charsets.UTF_8)
-            .use { reader ->
-                properties.load(reader)
-            }
-    } else error("File from not found")
-
-    return properties.getProperty(key)
 }
