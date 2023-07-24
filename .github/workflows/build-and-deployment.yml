@@ -24,7 +24,7 @@ jobs:
       - name: Publish Firebase Auth
         uses: eskatos/gradle-command-action@v1
         with:
-          arguments: :publish
+          arguments: publish
         env:
           ossrhUrl: ${{ secrets.OSSH_URL }}
           ossrhUsername: ${{ secrets.OSSH_USERNAME }}
