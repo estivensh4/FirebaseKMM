@@ -82,3 +82,24 @@ signing {
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications)
 }
+
+koverReport {
+    androidReports("release") {
+        // filters for all report types only of 'release' build type
+        filters {
+            excludes {
+                classes(
+                    "*Fragment",
+                    "*Fragment\$*",
+                    "*Activity",
+                    "*Activity\$*",
+                    "*.databinding.*",
+                    "*.BuildConfig",
+
+                    // excludes debug classes
+                    "*.DebugUtil"
+                )
+            }
+        }
+    }
+}

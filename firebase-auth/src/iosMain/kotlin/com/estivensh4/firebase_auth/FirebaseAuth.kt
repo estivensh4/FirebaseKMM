@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.callbackFlow
 actual val Firebase.auth
     get() = FirebaseAuth(FIRAuth())
 
-actual class FirebaseAuth(val iOS: FIRAuth) {
+actual class FirebaseAuth(internal val iOS: FIRAuth) {
 
     actual val currentUser get() = iOS.currentUser?.let { FirebaseUser(it) }
 
@@ -55,6 +55,18 @@ actual class FirebaseAuth(val iOS: FIRAuth) {
         email: String,
         password: String
     ) = AuthResult(awaitResult { iOS.createUserWithEmail(email, password, it) })
+
+    /**
+     * Sign in with email and password.
+     *
+     * @param email Email
+     * @param password Password
+     * @return
+     */
+    actual suspend fun signInWithEmailAndPassword(
+        email: String,
+        password: String
+    ) = AuthResult(iOS.awaitResult { signInWithEmail(email = email, password = password, completion = it) })
 
     /**
      * Check action code.

@@ -20,9 +20,13 @@ expect class FirebaseUser {
     val metadata: FirebaseUserMetadata?
     val multiFactor: FirebaseMultiFactor
     val providerData: List<UserInfo>
+    val photoUrl: String?
     suspend fun getIdToken(forceRefresh: Boolean): String?
     suspend fun linkWithCredential(credential: AuthCredential): AuthResult
     suspend fun unlink(provider: String): FirebaseUser?
     suspend fun updateEmail(email: String)
     suspend fun verifyBeforeUpdateEmail(newEmail: String)
+    suspend fun updateProfile(displayName: String?, photoUrl: String?)
+    suspend fun updatePassword(newPassword: String)
+    suspend fun delete()
 }

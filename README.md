@@ -17,7 +17,7 @@ The following libraries are available for the various Firebase products.
 | [Performance](https://firebase.google.com/docs/perf-mon)        |  <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-performance?versionPrefix=0.6">  |    [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-performance/src/commonMain/kotlin/com/estivensh4/firebase_performance/FirebasePerformance.kt)    | ✅ available | ✅️ available   |
 | [Messaging](https://firebase.google.com/docs/cloud-messaging)   |   <img alt="Maven Central" src="https://img.shields.io/maven-central/v/io.github.estivensh4/firebase-messaging?versionPrefix=0.6">   |       [![100%](https://img.shields.io/badge/-0%25-lightgrey?style=flat-square)](/firebase-messaging/src/commonMain/kotlin/com/estivensh4/firebase_messaging/FirebaseMessaging.kt)       | ✅ available | ✔️ In progress |
 
-## Implementation
+## Implementation 
 
 1. add the dependency below to your **module**'s `build.gradle.kts` file:
 
@@ -29,17 +29,35 @@ val commonMain by getting {
 }
 ```
 
-2. adds the configuration file
+2. adds the configuration file (Required)
 
-|                                                             	 **Android**                                                              |                                                              **iOS**                                                               |
-|:--------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
+|                                                            	 **Android**                                                            |                                                             **iOS**                                                             |
+|:-----------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------:|
 | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/android-implementation.png"> | <img alt="Maven Central" src="https://github.com/estivensh4/FirebaseKMM/blob/main/documentation/images/ios-implementation.png"> | 
 
+
+3. add dependencies in the pod (Required)
+
+```kotlin
+cocoapods {
+    framework {
+        baseName = "shared"
+    }
+
+    // add this line for each required module
+    pod("Firebase/$module", "~> 10.11.0")
+}
+```
+
 ## Examples
-### FirebaseAuth
-
-
-
+[FirebaseAuth](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-auth)<br>
+[FirebaseConfig](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-config)<br>
+[FirebaseCrashlytics](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-crashlytics)<br>
+[FirebaseFirestore](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-firestore)<br>
+[FirebaseInstallations](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-installations)<br>
+[FirebaseMessaging](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-messaging)<br>
+[FirebasePerformance](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-performance)<br>
+[FirebaseStorage](https://github.com/estivensh4/FirebaseKMM/tree/main/firebase-storage)
 
 ## Inspiration
 This library was mostly inspired by [Firebase Kotlin SDK](https://github.com/GitLiveApp/firebase-kotlin-sdk).<br>

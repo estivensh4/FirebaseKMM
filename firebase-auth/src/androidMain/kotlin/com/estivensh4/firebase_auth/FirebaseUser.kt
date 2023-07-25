@@ -8,9 +8,11 @@
 
 package com.estivensh4.firebase_auth
 
+import android.net.Uri
+import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 
-actual class FirebaseUser internal constructor(internal val android: com.google.firebase.auth.FirebaseUser) {
+actual class FirebaseUser(internal val android: com.google.firebase.auth.FirebaseUser) {
     actual val phoneNumber get() = android.phoneNumber
     actual val isAnonymous get() = android.isAnonymous
     actual val displayName get() = android.displayName
@@ -22,6 +24,7 @@ actual class FirebaseUser internal constructor(internal val android: com.google.
     actual val metadata get() = android.metadata?.let { FirebaseUserMetadata(it) }
     actual val multiFactor get() = FirebaseMultiFactor(android.multiFactor)
     actual val providerData get() = android.providerData.map { it.toAndroid() }.toList()
+    actual val photoUrl: String? get() = android.photoUrl?.toString()
 
     /**
      * Get id token.
@@ -72,4 +75,37 @@ actual class FirebaseUser internal constructor(internal val android: com.google.
     actual suspend fun verifyBeforeUpdateEmail(
         newEmail: String
     ) = android.verifyBeforeUpdateEmail(newEmail).await().run { }
+
+    /**
+     * Update profile.
+     *
+     * @param displayName Display name
+     * @param photoUrl Photo url
+     */
+    actual suspend fun updateProfile(
+        displayName: String?,
+        photoUrl: String?
+    ) {
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName(displayName)
+            .setPhotoUri(Uri.parse(photoUrl))
+            .build()
+        android.updateProfile(profileUpdates)
+    }
+
+    /**
+     * Update password.
+     *
+     * @param newPassword New password
+     */
+    actual suspend fun updatePassword(newPassword: String) {
+        android.updatePassword(newPassword).await()
+    }
+
+    /**
+     * Delete.
+     */
+    actual suspend fun delete() {
+        android.delete().await()
+    }
 }
