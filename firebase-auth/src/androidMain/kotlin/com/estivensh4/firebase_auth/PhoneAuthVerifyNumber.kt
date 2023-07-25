@@ -9,10 +9,13 @@
 package com.estivensh4.firebase_auth
 
 import android.app.Activity
+import com.google.firebase.auth.PhoneAuthCredential
 import java.util.concurrent.TimeUnit
 
 actual interface PhoneAuthVerifyNumber {
     val activity: Activity
     val timeout: Long
     val timeunit: TimeUnit
+    fun onCodeSent(verificationId: String)
+    fun verificationCompleted(credential: PhoneAuthCredential)
 }

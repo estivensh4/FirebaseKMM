@@ -17,12 +17,11 @@ expect class PhoneAuthProvider constructor(_auth: FirebaseAuth = Firebase.auth) 
     suspend fun verifyPhoneNumber(
         phoneNumber: String,
         phoneAuthVerifyNumber: PhoneAuthVerifyNumber
-    ): PhoneAuthResult
+    )
 }
 
 expect class PhoneAuthCredential {
     val provider: String
 }
 
-expect sealed class PhoneAuthResult
 expect interface PhoneAuthVerifyNumber

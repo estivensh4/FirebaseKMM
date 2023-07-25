@@ -11,9 +11,8 @@ package com.estivensh4.firebase_auth
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.coroutineScope
 import com.google.firebase.auth.PhoneAuthProvider as phoneAuthProvider
 
 actual class PhoneAuthProvider(private val android: phoneAuthProvider) {
@@ -34,23 +33,24 @@ actual class PhoneAuthProvider(private val android: phoneAuthProvider) {
     actual suspend fun verifyPhoneNumber(
         phoneNumber: String,
         phoneAuthVerifyNumber: PhoneAuthVerifyNumber
-    ) = suspendCoroutine { continuation ->
+    ) = coroutineScope {
+        val response = CompletableDeferred<Result<Unit>>()
         val callbacks = object :
             phoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                continuation.resume(PhoneAuthResult.VerificationCompleted(phoneAuthCredential))
+                phoneAuthVerifyNumber.verificationCompleted(phoneAuthCredential)
             }
 
             override fun onVerificationFailed(exception: FirebaseException) {
-                continuation.resumeWithException(exception)
+                response.complete(Result.failure(exception))
             }
 
             override fun onCodeSent(
                 verificationId: String,
                 token: phoneAuthProvider.ForceResendingToken
             ) {
-                continuation.resume(PhoneAuthResult.OnCodeSent(verificationId, token))
+                phoneAuthVerifyNumber.onCodeSent(verificationId)
             }
         }
         val options = PhoneAuthOptions.newBuilder(auth.android)
@@ -60,6 +60,7 @@ actual class PhoneAuthProvider(private val android: phoneAuthProvider) {
             .setCallbacks(callbacks)
             .build()
         phoneAuthProvider.verifyPhoneNumber(options)
+        response.await().getOrThrow()
     }
 }
 
