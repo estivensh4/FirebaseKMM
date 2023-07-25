@@ -39,7 +39,7 @@ object ProjectConfig {
     }
 
     object Android {
-        const val packageName = "com.estiven"
+        const val packageName = "com.estivensh4"
         const val compileSdk = 33
         const val minSdk = 24
         const val appModule = "$packageName.firebase_app"

@@ -57,6 +57,16 @@ actual class FirebaseAuth internal constructor(internal val android: com.google.
     ) = AuthResult(android.createUserWithEmailAndPassword(email, password).await())
 
     /**
+     * Sign in with email and password.
+     *
+     * @param email Email
+     * @param password Password
+     * @return
+     */
+    actual suspend fun signInWithEmailAndPassword(email: String, password: String) =
+        AuthResult(android.signInWithEmailAndPassword(email, password).await())
+
+    /**
      * Check action code.
      *
      * @param code Code

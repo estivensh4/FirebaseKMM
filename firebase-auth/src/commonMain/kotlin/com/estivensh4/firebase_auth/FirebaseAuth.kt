@@ -30,6 +30,7 @@ expect class FirebaseAuth {
     suspend fun updateCurrentUser(user: FirebaseUser)
     suspend fun isSignInWithEmailLink(link: String): Boolean
     suspend fun signInWithCredential(credential: AuthCredential): AuthResult
+    suspend fun signInWithEmailAndPassword(email: String, password: String): AuthResult
     fun signOut()
     fun useAppLanguage()
     fun useEmulator(host: String, port: Int)

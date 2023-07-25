@@ -57,6 +57,18 @@ actual class FirebaseAuth(val iOS: FIRAuth) {
     ) = AuthResult(awaitResult { iOS.createUserWithEmail(email, password, it) })
 
     /**
+     * Sign in with email and password.
+     *
+     * @param email Email
+     * @param password Password
+     * @return
+     */
+    actual suspend fun signInWithEmailAndPassword(
+        email: String,
+        password: String
+    ) = AuthResult(awaitResult { iOS.signInWithEmail(email, password, it) })
+
+    /**
      * Check action code.
      *
      * @param code Code

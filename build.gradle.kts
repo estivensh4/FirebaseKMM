@@ -6,6 +6,7 @@
  *
  */
 
+import com.estivensh4.buildsrc.Module
 import com.estivensh4.buildsrc.ProjectConfig
 
 repositories {
@@ -19,7 +20,6 @@ plugins {
     kotlin("plugin.serialization").version("1.8.21")
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
     id("org.sonarqube") version "4.2.1.3168"
-    id("base")
     id("com.vanniktech.maven.publish") version "0.25.3"
 }
 
@@ -150,49 +150,3 @@ sonarqube {
     }
 }
 
-koverReport {
-    // filters for all report types of all build variants
-    defaults {
-        /*mergeWith("firebase-app")
-        mergeWith("firebase-auth")
-        mergeWith("firebase-config")
-        mergeWith("firebase-crashlytics")
-        mergeWith("firebase-firestore")
-        mergeWith("firebase-installations")
-        mergeWith("firebase-messaging")
-        mergeWith("firebase-performance")
-        mergeWith("firebase-storage")*/
-    }
-    filters {
-        excludes {
-            classes(
-                "*Fragment",
-                "*Fragment\$*",
-                "*Activity",
-                "*Activity\$*",
-                "*.databinding.*",
-                "*.BuildConfig"
-            )
-        }
-    }
-
-    /*    androidReports("release") {
-            // filters for all report types only of 'release' build type
-            filters {
-                excludes {
-                    classes(
-                        "*Fragment",
-                        "*Fragment\$*",
-                        "*Activity",
-                        "*Activity\$*",
-                        "*.databinding.*",
-                        "*.BuildConfig",
-
-                        // excludes debug classes
-                        "*.DebugUtil"
-                    )
-                }
-            }
-        }*/
-
-}
