@@ -55,7 +55,7 @@ internal suspend inline fun <T> T.await(function: T.(callback: (NSError?) -> Uni
         if(error == null) {
             job.complete(Unit)
         } else {
-            job.completeExceptionally(error.toException())
+            job.completeExceptionally(Exception(""))
         }
     }
     job.await()

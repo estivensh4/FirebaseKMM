@@ -10,7 +10,7 @@ package com.estivensh4.firebase_auth
 
 import cocoapods.FirebaseAuth.FIRAdditionalUserInfo
 
-actual class AdditionalUserInfo(val iOS: FIRAdditionalUserInfo) {
+actual class AdditionalUserInfo(private val iOS: FIRAdditionalUserInfo) {
     actual val providerId: String? get() = iOS.providerID
     actual val username get() = iOS.username
     @Suppress("UNCHECKED_CAST")

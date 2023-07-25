@@ -12,7 +12,7 @@ import android.net.Uri
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 
-actual class FirebaseUser internal constructor(internal val android: com.google.firebase.auth.FirebaseUser) {
+actual class FirebaseUser(internal val android: com.google.firebase.auth.FirebaseUser) {
     actual val phoneNumber get() = android.phoneNumber
     actual val isAnonymous get() = android.isAnonymous
     actual val displayName get() = android.displayName
@@ -76,6 +76,12 @@ actual class FirebaseUser internal constructor(internal val android: com.google.
         newEmail: String
     ) = android.verifyBeforeUpdateEmail(newEmail).await().run { }
 
+    /**
+     * Update profile.
+     *
+     * @param displayName Display name
+     * @param photoUrl Photo url
+     */
     actual suspend fun updateProfile(
         displayName: String?,
         photoUrl: String?
@@ -87,10 +93,18 @@ actual class FirebaseUser internal constructor(internal val android: com.google.
         android.updateProfile(profileUpdates)
     }
 
+    /**
+     * Update password.
+     *
+     * @param newPassword New password
+     */
     actual suspend fun updatePassword(newPassword: String) {
         android.updatePassword(newPassword).await()
     }
 
+    /**
+     * Delete.
+     */
     actual suspend fun delete() {
         android.delete().await()
     }

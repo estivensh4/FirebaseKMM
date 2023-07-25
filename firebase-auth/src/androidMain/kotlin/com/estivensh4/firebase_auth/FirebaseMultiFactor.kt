@@ -10,7 +10,7 @@ package com.estivensh4.firebase_auth
 
 import kotlinx.coroutines.tasks.await
 
-actual class FirebaseMultiFactor(internal val android: com.google.firebase.auth.MultiFactor) {
+actual class FirebaseMultiFactor(private val android: com.google.firebase.auth.MultiFactor) {
 
     /**
      * Unenroll.
