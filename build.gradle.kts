@@ -20,6 +20,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
     id("org.sonarqube") version "4.2.1.3168"
     id("base")
+    id("com.vanniktech.maven.publish") version "0.25.3"
 }
 
 apply(plugin = "org.jetbrains.kotlinx.kover")
@@ -53,6 +54,10 @@ subprojects {
         mavenCentral()
     }
 
+    tasks.withType<Sign>().configureEach {
+        onlyIf { !project.gradle.startParameter.taskNames.contains("publishToMavenLocal") }
+    }
+
     afterEvaluate {
         dependencies {
             "commonMainImplementation"(libs.kotlin.coroutines.core)
@@ -70,10 +75,6 @@ subprojects {
             "androidUnitTestImplementation"(libs.androidx.test.runner)
             "androidUnitTestImplementation"(libs.roboelectric)
         }
-    }
-
-    tasks.withType<Sign>().configureEach {
-        onlyIf { !project.gradle.startParameter.taskNames.contains("publishToMavenLocal") }
     }
 
     apply(plugin = "maven-publish")

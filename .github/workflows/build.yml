@@ -1,14 +1,8 @@
-name: Build and deployment
+name: Build
 
 on:
   pull_request:
     branches: [ "main" ]
-
-env:
-  ossrhUsername: ${{ secrets.OSSH_USERNAME }}
-  ossrhPassword: ${{ secrets.OSSH_PASSWORD }}
-  ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
-  ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASS }}
 
 jobs:
   build:
@@ -23,11 +17,7 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
           cache: gradle
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: $ossrhUsername
-        run: echo "$JOB_CONTEXT"
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Publish All
-        run: ./gradlew publish
+        run: ./gradlew build

@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  release:
+    types: [ prereleased, released ]
+
+env:
+  ossrhUsername: ${{ secrets.OSSH_USERNAME }}
+  ossrhPassword: ${{ secrets.OSSH_PASSWORD }}
+  ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASS }}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Publish All
+        run: ./gradlew publish
