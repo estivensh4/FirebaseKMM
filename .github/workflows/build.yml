@@ -1,13 +1,8 @@
-name: Build and deployment
+name: Build
 
 on:
   pull_request:
     branches: [ "main" ]
-
-env:
-  ossrhUrl: ${{ secrets.SONATYPEURL }}
-  ossrhUsername: ${{ secrets.SONATYPEUSERNAME }}
-  ossrhPassword: ${{ secrets.SONATYPEPASSWORD }}
 
 jobs:
   build:
@@ -19,11 +14,10 @@ jobs:
       - name: set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'zulu'
           cache: gradle
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
+      - name: Publish All
         run: ./gradlew build
