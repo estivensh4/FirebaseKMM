@@ -25,5 +25,5 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Publish All
+      - name: Deploy all modules
         run: ./gradlew publish
