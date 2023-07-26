@@ -13,10 +13,9 @@ import cocoapods.FirebaseRemoteConfig.FIRRemoteConfigFetchAndActivateStatus
 import cocoapods.FirebaseRemoteConfig.FIRRemoteConfigSettings
 import cocoapods.FirebaseRemoteConfig.FIRRemoteConfigSource
 import com.estivensh4.firebase_app.Firebase
-import kotlinx.coroutines.CompletableDeferred
+import com.estivensh4.firebase_common.awaitResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
-import platform.Foundation.NSError
 
 actual val Firebase.config
     get() = FirebaseConfig(FIRRemoteConfig.remoteConfig())
@@ -111,30 +110,4 @@ actual class FirebaseConfig(private val iOS: FIRRemoteConfig) {
             }
             awaitClose { listener.remove() }
         }
-}
-
-private suspend inline fun <T, reified R> T.awaitResult(
-    function: T.(callback: (R?, NSError?) -> Unit) -> Unit
-): R {
-    val job = CompletableDeferred<R?>()
-    function { result, error ->
-        if (error == null) {
-            job.complete(result)
-        } else {
-            job.completeExceptionally(Error(""))
-        }
-    }
-    return job.await() as R
-}
-
-private suspend inline fun <T> T.await(function: T.(callback: (NSError?) -> Unit) -> Unit) {
-    val job = CompletableDeferred<Unit>()
-    function { error ->
-        if (error == null) {
-            job.complete(Unit)
-        } else {
-            job.completeExceptionally(Error(""))
-        }
-    }
-    job.await()
 }

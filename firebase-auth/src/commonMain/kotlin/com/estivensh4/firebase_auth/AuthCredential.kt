@@ -8,6 +8,6 @@
 
 package com.estivensh4.firebase_auth
 
-expect class AuthCredential {
+expect open class AuthCredential {
     val provider: String
 }

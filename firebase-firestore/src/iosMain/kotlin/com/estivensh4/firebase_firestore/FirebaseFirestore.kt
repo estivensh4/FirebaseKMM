@@ -10,18 +10,17 @@ package com.estivensh4.firebase_firestore
 
 import cocoapods.FirebaseFirestore.*
 import com.estivensh4.firebase_app.Firebase
+import com.estivensh4.firebase_common.await
+import com.estivensh4.firebase_common.awaitResult
 
 actual val Firebase.firestore
     get() = FirebaseFirestore(FIRFirestore.firestore())
 
-actual typealias ServerTimestampBehavior = FIRServerTimestampBehavior
 actual typealias Source = FIRFirestoreSource
 
 actual class FirebaseFirestore(private val iOS: FIRFirestore) {
     actual val firestoreSettings
         get() = FirestoreSettings(iOS.settings)
-    //actual val app
-        //get() = FirestoreApp(iOS.app as FIRApp)
 
     actual fun collection(collectionPath: String) =
         CollectionReference(iOS.collectionWithPath(collectionPath))
@@ -64,8 +63,6 @@ actual class FirebaseFirestore(private val iOS: FIRFirestore) {
     }
 }
 
-
-
 actual class Transaction(private val iOS: FIRTransaction) {
     @Suppress("UNCHECKED_CAST")
     actual fun set(documentRef: DocumentReference, data: Any) =
@@ -74,7 +71,9 @@ actual class Transaction(private val iOS: FIRTransaction) {
     actual fun update(documentRef: DocumentReference, data: MutableMap<String, Any>) =
         Transaction(iOS.setData(data.toMap(), documentRef.iOS))
 
-    actual suspend fun delete(documentRef: DocumentReference) = await { documentRef.delete() }
+    actual suspend fun delete(documentRef: DocumentReference) {
+        await { documentRef.delete() }
+    }
     actual suspend fun get(documentRef: DocumentReference) = DocumentSnapshot(documentRef.get().iOS)
 }
 

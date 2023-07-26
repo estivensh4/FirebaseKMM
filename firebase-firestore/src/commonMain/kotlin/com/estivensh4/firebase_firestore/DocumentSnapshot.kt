@@ -8,10 +8,16 @@
 
 package com.estivensh4.firebase_firestore
 
+import kotlinx.serialization.DeserializationStrategy
+
 expect class DocumentSnapshot {
-    fun get(field: String): Any?
-    fun get(fieldPath: FieldPath): Any?
-    fun get(field: String, serverTimestampBehavior: ServerTimestampBehavior): Any?
-    fun get(fieldPath: FieldPath, serverTimestampBehavior: ServerTimestampBehavior): Any?
-    inline fun <reified T : Any> toObject(): T?
+    val exists: Boolean
+    inline fun <reified T> get(field: String, serverTimestampBehavior: ServerTimestampBehavior = ServerTimestampBehavior.NONE): T
+    fun <T> get(field: String, strategy: DeserializationStrategy<T>, serverTimestampBehavior: ServerTimestampBehavior = ServerTimestampBehavior.NONE): T
+    fun <T> getData(
+        strategy: DeserializationStrategy<T>,
+        serverTimestampBehavior: ServerTimestampBehavior = ServerTimestampBehavior.NONE
+    ): T
+
+    inline fun <reified T : Any> getData(serverTimestampBehavior: ServerTimestampBehavior = ServerTimestampBehavior.NONE): T
 }

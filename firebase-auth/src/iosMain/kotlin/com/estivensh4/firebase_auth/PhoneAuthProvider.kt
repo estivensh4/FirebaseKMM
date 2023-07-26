@@ -10,6 +10,7 @@ package com.estivensh4.firebase_auth
 
 import cocoapods.FirebaseAuth.FIRAuthCredential
 import cocoapods.FirebaseAuth.FIRPhoneAuthProvider
+import com.estivensh4.firebase_common.awaitResult
 
 actual class PhoneAuthProvider(private val iOS: FIRPhoneAuthProvider) {
 

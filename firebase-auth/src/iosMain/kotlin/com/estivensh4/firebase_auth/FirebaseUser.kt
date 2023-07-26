@@ -9,6 +9,9 @@
 package com.estivensh4.firebase_auth
 
 import cocoapods.FirebaseAuth.FIRUser
+import com.estivensh4.firebase_common.await
+import com.estivensh4.firebase_common.awaitResult
+import com.estivensh4.firebase_common.awaitT
 import platform.Foundation.NSURL
 
 actual class FirebaseUser(internal val iOS: FIRUser) {
@@ -55,14 +58,14 @@ actual class FirebaseUser(internal val iOS: FIRUser) {
                 setDisplayName(displayName)
                 setPhotoURL(photoUrl?.let { NSURL.URLWithString(it) })
             }
-        iOS.await { profileUpdates.commitChangesWithCompletion(it) }
+        iOS.awaitT { profileUpdates.commitChangesWithCompletion(it) }
     }
 
     actual suspend fun updatePassword(newPassword: String) {
-        iOS.await { updatePassword(newPassword, it) }
+        iOS.awaitT { updatePassword(newPassword, it) }
     }
 
     actual suspend fun delete() {
-        iOS.await { deleteWithCompletion(it) }
+        iOS.awaitT { deleteWithCompletion(it) }
     }
 }

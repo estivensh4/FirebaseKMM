@@ -9,6 +9,7 @@
 package com.estivensh4.firebase_firestore
 
 import cocoapods.FirebaseFirestore.FIRWriteBatch
+import com.estivensh4.firebase_common.await
 
 actual class WriteBatch(private val iOS: FIRWriteBatch) {
     @Suppress("UNCHECKED_CAST")

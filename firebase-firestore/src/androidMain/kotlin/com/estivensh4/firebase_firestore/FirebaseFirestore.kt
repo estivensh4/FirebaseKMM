@@ -18,7 +18,6 @@ actual val Firebase.firestore
 actual typealias Direction = com.google.firebase.firestore.Query.Direction
 actual typealias Source = com.google.firebase.firestore.Source
 actual typealias MetadataChanges = com.google.firebase.firestore.MetadataChanges
-actual typealias ServerTimestampBehavior = com.google.firebase.firestore.DocumentSnapshot.ServerTimestampBehavior
 
 actual class FirebaseFirestore(private val android: firebaseFirestore) {
 
