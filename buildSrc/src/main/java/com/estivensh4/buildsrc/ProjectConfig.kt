@@ -51,5 +51,6 @@ object ProjectConfig {
         const val messagingModule = "$packageName.firebase_messaging"
         const val performanceModule = "$packageName.firebase_performance"
         const val storageModule = "$packageName.firebase_storage"
+        const val commonModule = "$packageName.firebase_common"
     }
 }

@@ -49,8 +49,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
+                api(libs.kotlin.serialization)
                 api(project(Module.app))
+                api(project(Module.common))
             }
         }
         val commonTest by getting {

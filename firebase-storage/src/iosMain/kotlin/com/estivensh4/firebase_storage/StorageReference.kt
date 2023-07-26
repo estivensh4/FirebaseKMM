@@ -14,6 +14,7 @@ import cocoapods.FirebaseStorage.FIRStorageTaskStatusPause
 import cocoapods.FirebaseStorage.FIRStorageTaskStatusProgress
 import cocoapods.FirebaseStorage.FIRStorageTaskStatusResume
 import cocoapods.FirebaseStorage.FIRStorageTaskStatusSuccess
+import com.estivensh4.firebase_common.awaitResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.FlowCollector

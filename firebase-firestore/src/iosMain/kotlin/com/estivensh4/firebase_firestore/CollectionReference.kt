@@ -9,10 +9,14 @@
 package com.estivensh4.firebase_firestore
 
 import cocoapods.FirebaseFirestore.FIRCollectionReference
+import com.estivensh4.firebase_common.await
+import com.estivensh4.firebase_common.awaitResult
+import com.estivensh4.firebase_common.encode
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.serialization.SerializationStrategy
 
-actual class CollectionReference(private val iOS: FIRCollectionReference) : Query(iOS) {
+actual class CollectionReference(override val iOS: FIRCollectionReference) : Query(iOS) {
     actual val id
         get() = iOS.collectionID
     actual val parent: DocumentReference?
@@ -26,19 +30,72 @@ actual class CollectionReference(private val iOS: FIRCollectionReference) : Quer
     actual fun document(documentPath: String) =
         DocumentReference(iOS.documentWithPath(documentPath))
 
-
+    /**
+     * Get.
+     *
+     * @return
+     */
     actual suspend fun get() =
         QuerySnapshot(awaitResult { iOS.getDocumentsWithCompletion(it) })
 
+    /**
+     * Add.
+     *
+     * @param T T
+     * @param data Data
+     * @param encodeDefaults Encode defaults
+     * @return
+     */
     @Suppress("UNCHECKED_CAST")
-    actual suspend fun add(data: Any) =
+    actual suspend inline fun <reified T> add(data: T, encodeDefaults: Boolean) =
         DocumentReference(await {
-            iOS.addDocumentWithData(
-                data as Map<Any?, *>,
-                it
-            )
+            iOS.addDocumentWithData(encode(data, encodeDefaults) as Map<Any?, *>, it)
         })
 
+    /**
+     * Add.
+     *
+     * @param T T
+     * @param data Data
+     * @param strategy Strategy
+     * @param encodeDefaults Encode defaults
+     * @return
+     */
+    @Suppress("UNCHECKED_CAST")
+    actual suspend fun <T> add(
+        data: T,
+        strategy: SerializationStrategy<T>,
+        encodeDefaults: Boolean
+    ) =
+        DocumentReference(await {
+            iOS.addDocumentWithData(encode(strategy, data, encodeDefaults) as Map<Any?, *>, it)
+        })
+
+    /**
+     * Add.
+     *
+     * @param T T
+     * @param strategy Strategy
+     * @param data Data
+     * @param encodeDefaults Encode defaults
+     * @return
+     */
+    @Suppress("UNCHECKED_CAST")
+    actual suspend fun <T> add(
+        strategy: SerializationStrategy<T>,
+        data: T,
+        encodeDefaults: Boolean
+    ) =
+        DocumentReference(await {
+            iOS.addDocumentWithData(encode(strategy, data, encodeDefaults) as Map<Any?, *>, it)
+        })
+
+    /**
+     * Snapshots.
+     *
+     * @param metadataChanges Metadata changes
+     * @return
+     */
     actual fun snapshots(metadataChanges: MetadataChanges) = callbackFlow {
         val listener =
             iOS.addSnapshotListenerWithIncludeMetadataChanges(

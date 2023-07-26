@@ -12,7 +12,7 @@ import cocoapods.FirebaseFirestore.FIRQuery
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
-actual open class Query(private val iOS: FIRQuery) {
+actual open class Query(open val iOS: FIRQuery) {
 
     actual val snapshotListener
         get() = callbackFlow {

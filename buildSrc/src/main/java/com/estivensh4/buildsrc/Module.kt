@@ -18,4 +18,5 @@ object Module {
     const val messaging = ":firebase-messaging"
     const val performance = ":firebase-performance"
     const val storage = ":firebase-storage"
+    const val common = ":firebase-common"
 }

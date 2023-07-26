@@ -50,6 +50,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(Module.app))
+                api(project(Module.common))
             }
         }
         val commonTest by getting {

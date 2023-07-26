@@ -8,16 +8,38 @@
 
 package com.estivensh4.firebase_firestore
 
+import com.estivensh4.firebase_common.decode
 import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.serialization.DeserializationStrategy
 
 actual class DocumentSnapshot(val android: DocumentSnapshot) {
-    actual fun get(field: String) = android.get(field)
-    actual fun get(fieldPath: FieldPath) = android.get(fieldPath.android)
-    actual fun get(field: String, serverTimestampBehavior: ServerTimestampBehavior) =
-        android.get(field, serverTimestampBehavior)
+    actual val exists get() = android.exists()
+    actual inline fun <reified T> get(
+        field: String,
+        serverTimestampBehavior: ServerTimestampBehavior
+    ): T =
+        decode(value = android.get(field, serverTimestampBehavior.toAndroid()))
 
-    actual fun get(fieldPath: FieldPath, serverTimestampBehavior: ServerTimestampBehavior) =
-        android.get(fieldPath.android, serverTimestampBehavior)
+    actual fun <T> get(
+        field: String,
+        strategy: DeserializationStrategy<T>,
+        serverTimestampBehavior: ServerTimestampBehavior
+    ): T =
+        decode(strategy, android.get(field, serverTimestampBehavior.toAndroid()))
 
-    actual inline fun <reified T : Any> toObject() = android.toObject(T::class.java)
+    actual inline fun <reified T : Any> getData(serverTimestampBehavior: ServerTimestampBehavior): T =
+        decode(value = android.getData(serverTimestampBehavior.toAndroid()))
+
+    actual fun <T> getData(
+        strategy: DeserializationStrategy<T>,
+        serverTimestampBehavior: ServerTimestampBehavior
+    ): T =
+        decode(strategy, android.getData(serverTimestampBehavior.toAndroid()))
+
+    fun ServerTimestampBehavior.toAndroid(): DocumentSnapshot.ServerTimestampBehavior =
+        when (this) {
+            ServerTimestampBehavior.ESTIMATE -> DocumentSnapshot.ServerTimestampBehavior.ESTIMATE
+            ServerTimestampBehavior.NONE -> DocumentSnapshot.ServerTimestampBehavior.NONE
+            ServerTimestampBehavior.PREVIOUS -> DocumentSnapshot.ServerTimestampBehavior.PREVIOUS
+        }
 }

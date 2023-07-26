@@ -9,6 +9,8 @@
 package com.estivensh4.firebase_firestore
 
 import cocoapods.FirebaseFirestore.FIRDocumentReference
+import com.estivensh4.firebase_common.await
+import com.estivensh4.firebase_common.awaitResult
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 

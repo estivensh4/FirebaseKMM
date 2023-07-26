@@ -11,7 +11,6 @@ package com.estivensh4.firebase_firestore
 import com.estivensh4.firebase_app.Firebase
 
 expect val Firebase.firestore: FirebaseFirestore
-expect enum class ServerTimestampBehavior
 expect enum class MetadataChanges
 expect enum class DocumentType
 expect enum class Direction

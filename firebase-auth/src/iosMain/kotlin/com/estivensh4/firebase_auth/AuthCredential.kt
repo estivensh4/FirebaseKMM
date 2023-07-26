@@ -10,6 +10,6 @@ package com.estivensh4.firebase_auth
 
 import cocoapods.FirebaseAuth.FIRAuthCredential
 
-actual class AuthCredential(internal val iOS: FIRAuthCredential) {
+actual open class AuthCredential(internal val iOS: FIRAuthCredential) {
     actual val provider get() = iOS.provider
 }

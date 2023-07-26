@@ -64,7 +64,4 @@ actual class PhoneAuthProvider(private val android: phoneAuthProvider) {
     }
 }
 
-actual class PhoneAuthCredential(val android: PhoneAuthCredential) {
-    actual val provider get() = android.provider
-}
-
+actual class PhoneAuthCredential(override val android: PhoneAuthCredential) : AuthCredential(android)

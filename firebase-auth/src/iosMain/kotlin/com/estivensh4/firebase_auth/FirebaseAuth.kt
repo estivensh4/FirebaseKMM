@@ -10,6 +10,9 @@ package com.estivensh4.firebase_auth
 
 import cocoapods.FirebaseAuth.*
 import com.estivensh4.firebase_app.Firebase
+import com.estivensh4.firebase_common.await
+import com.estivensh4.firebase_common.awaitResult
+import com.estivensh4.firebase_common.throwError
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 

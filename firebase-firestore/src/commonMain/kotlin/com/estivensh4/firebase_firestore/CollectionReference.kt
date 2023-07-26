@@ -9,6 +9,7 @@
 package com.estivensh4.firebase_firestore
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.SerializationStrategy
 
 expect class CollectionReference : Query {
     val id: String
@@ -18,6 +19,9 @@ expect class CollectionReference : Query {
     fun snapshots(metadataChanges: MetadataChanges): Flow<QuerySnapshot>
     fun document(): DocumentReference
     fun document(documentPath: String): DocumentReference
-    suspend fun add(data: Any): DocumentReference
+    suspend inline fun <reified T> add(data: T, encodeDefaults: Boolean = true): DocumentReference
+    @Deprecated("This will be replaced with add(strategy: SerializationStrategy<T>, data: T, encodeDefaults: Boolean = true)")
+    suspend fun <T> add(data: T, strategy: SerializationStrategy<T>, encodeDefaults: Boolean = true): DocumentReference
+    suspend fun <T> add(strategy: SerializationStrategy<T>, data: T, encodeDefaults: Boolean = true): DocumentReference
     suspend fun get(): QuerySnapshot
 }
