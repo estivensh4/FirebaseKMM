@@ -12,4 +12,5 @@ import cocoapods.FirebaseAuth.FIRAuthUIDelegateProtocol
 
 actual interface PhoneAuthVerifyNumber {
     val delete: FIRAuthUIDelegateProtocol
+    fun onCodeSent(verificationId: String)
 }
