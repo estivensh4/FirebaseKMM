@@ -31,7 +31,7 @@ actual class PhoneAuthProvider(private val iOS: FIRPhoneAuthProvider) {
     actual suspend fun verifyPhoneNumber(
         phoneNumber: String,
         phoneAuthVerifyNumber: PhoneAuthVerifyNumber
-    ): PhoneAuthResult {
+    ) {
         val verificationId = iOS.awaitResult { phoneAuthProvider ->
             FIRPhoneAuthProvider.providerWithAuth(auth.iOS)
                 .verifyPhoneNumber(
@@ -40,7 +40,7 @@ actual class PhoneAuthProvider(private val iOS: FIRPhoneAuthProvider) {
                     completion = phoneAuthProvider
                 )
         }
-        return PhoneAuthResult.OnCodeSent(verificationId)
+        phoneAuthVerifyNumber.onCodeSent(verificationId)
     }
 }
 
