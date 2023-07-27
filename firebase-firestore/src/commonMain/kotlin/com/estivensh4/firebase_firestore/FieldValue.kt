@@ -8,28 +8,16 @@
 
 package com.estivensh4.firebase_firestore
 
-import com.estivensh4.firebase_common.SpecialValueSerializer
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
+import kotlin.js.JsName
 
-@Serializable(with = FieldValueSerializer::class)
-expect class FieldValue internal constructor(nativeValue: Any) {
-    internal val nativeValue: Any
+expect object FieldValue {
+    val serverTimestamp: Double
+    val delete: Any
+    fun increment(value: Int): Any
+    fun arrayUnion(vararg elements: Any): Any
+    fun arrayRemove(vararg elements: Any): Any
 
-    companion object {
-        val serverTimestamp: FieldValue
-        val delete: FieldValue
-        fun increment(value: Int): FieldValue
-        fun arrayUnion(vararg elements: Any): FieldValue
-        fun arrayRemove(vararg elements: Any): FieldValue
-    }
+    @Deprecated("Replaced with FieldValue.delete")
+    @JsName("deprecatedDelete")
+    fun delete(): Any
 }
-
-object FieldValueSerializer : KSerializer<FieldValue> by SpecialValueSerializer(
-    serialName = "FieldValue",
-    toNativeValue = FieldValue::nativeValue,
-    fromNativeValue = { raw ->
-        raw?.let(::FieldValue) ?: throw SerializationException("Cannot deserialize $raw")
-    }
-)

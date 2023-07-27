@@ -20,8 +20,6 @@ expect class PhoneAuthProvider constructor(_auth: FirebaseAuth = Firebase.auth) 
     )
 }
 
-expect class PhoneAuthCredential {
-    val provider: String
-}
+expect class PhoneAuthCredential : AuthCredential
 
 expect interface PhoneAuthVerifyNumber
