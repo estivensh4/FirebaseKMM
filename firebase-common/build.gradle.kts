@@ -17,17 +17,12 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishAllLibraryVariants()
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "firebase-common"
-        }
-    }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
         val commonMain by getting {
