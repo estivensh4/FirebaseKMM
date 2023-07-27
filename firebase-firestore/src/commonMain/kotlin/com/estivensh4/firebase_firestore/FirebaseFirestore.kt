@@ -13,7 +13,10 @@ import com.estivensh4.firebase_app.Firebase
 expect val Firebase.firestore: FirebaseFirestore
 expect enum class MetadataChanges
 expect enum class DocumentType
-expect enum class Direction
+expect enum class Direction {
+    ASCENDING,
+    DESCENDING
+}
 expect enum class Source
 
 expect class FirebaseFirestore {
